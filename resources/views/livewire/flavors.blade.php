@@ -5,13 +5,13 @@
     <div class="grid grid-cols-2">
         <div class="py-5">
             <x-jet-button wire:click="createShowModal">
-                {{ __('New Flavor') }}
+{{ __('New Product') }}
             </x-jet-button>
         </div>
         <div class="text-right py-5">
             <input wire:model="query" type="text"
                 class="border-gray-300 focus:border-indigo-300 py-1 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-2/5"
-                placeholder="Search flavor...">
+placeholder="Search product...">
 
         </div>
     </div>
@@ -27,12 +27,18 @@
                             <tr>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                    flavor
+product
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                                     category
                                 </th>
+<th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+    size
+</th>
+<th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+    price
+</th>
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only"></span>
                                 </th>
@@ -48,20 +54,26 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
                                     {{ $item->category->name }}
                                 </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+    {{ $item->size->name }}
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+    {{ $item->price }}
+</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <x-jet-edit-button wire:click="updateShowModal({{ $item->id }})">
-                                      <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                        <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                                            clip-rule="evenodd" />
-                                    </svg>
+                                        <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
+<path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                            <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                                                clip-rule="evenodd" />
+                                        </svg>
                                     </x-jet-edit-button>
                                     <x-jet-delete-action-button wire:click="deleteShowModal({{ $item->id }})">
-                                       <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                            clip-rule="evenodd" />
-                                    </svg>
+                                        <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                clip-rule="evenodd" />
+                                        </svg>
                                     </x-jet-delete-action-button>
                                 </td>
                             </tr>
@@ -87,17 +99,17 @@
 
     <x-jet-dialog-modal wire:model="modalFormVisible">
         <x-slot name="title">
-            {{ __('Flavor') }}
+{{ __('Product') }}
         </x-slot>
 
         <x-slot name="content">
             <div class="mt-4">
                 @if ($modelId)
-                <x-jet-label for="name" value="{{ __('Flavor') }}" />
+<x-jet-label for="name" value="{{ __('Product') }}" />
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name"
                     wire:keydown.enter="update" />
                 @else
-                <x-jet-label for="name" value="{{ __('Flavor') }}" />
+<x-jet-label for="name" value="{{ __('Product') }}" />
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name"
                     wire:keydown.enter="create" />
                 @endif
@@ -124,6 +136,37 @@
                 @endif
                 @error('category') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
+<div class="mt-4">
+    <x-jet-label for="category" value="{{ __('Category') }}" />
+    @if ($modelId)
+    <select id="category" wire:model="size"
+        class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
+        <option value="">-Select size-</option>
+        @foreach ($sizes as $item)
+        <option value="{{ $item->id }}">{{ $item->name }}</option>
+        @endforeach
+    </select>
+    @else
+    <select id="category" wire:model="size"
+        class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
+        <option value="">-Select size-</option>
+        @foreach ($sizes as $item)
+        <option value="{{ $item->id }}">{{ $item->name }}</option>
+        @endforeach
+    </select>
+    @endif
+    @error('size') <span class="text-red-500">{{ $message }}</span> @enderror
+</div>
+<div class="mt-4">
+    @if ($modelId)
+    <x-jet-label for="price" value="{{ __('Price') }}" />
+    <x-jet-input id="price" class="block mt-1 w-full" type="text" wire:model="price" wire:keydown.enter="update" />
+    @else
+    <x-jet-label for="price" value="{{ __('Price    ') }}" />
+    <x-jet-input id="price" class="block mt-1 w-full" type="text" wire:model="price" wire:keydown.enter="create" />
+    @endif
+    @error('price') <span class="text-red-500">{{ $message }}</span> @enderror
+</div>
         </x-slot>
 
         <x-slot name="footer">

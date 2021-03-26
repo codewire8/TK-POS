@@ -21,22 +21,7 @@
                 </svg>
                 <span class="ml-2 pt-1">{{ __('Dashboard') }}</span>
             </a>
-        </li>
-        <li
-            class="relative px-6 py-2 {!! request()->routeIs('product') ? 'py-2 px-3 focus:outline-none bg-indigo-50' : '' !!}">
-            {!! request()->routeIs('product') ? '<span
-                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                aria-hidden="true"></span>' : ''
-            !!}
-            <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                href="{{route('product')}}">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
-                </svg>
-                <span class="ml-2 pt-1">{{ __('Products') }}</span>
-            </a>
-        </li>
+</li>
 
         <li class="relative px-6 py-2">
 
@@ -72,8 +57,8 @@
                         </a>
 
                         <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                            href="{{route('flavor')}}">
-                            <span class="ml-4">{{ __('Flavor') }}</span>
+href="{{route('product')}}">
+<span class="ml-4">{{ __('Product') }}</span>
                         </a>
 
                         <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"

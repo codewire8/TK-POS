@@ -16,7 +16,9 @@ class CreateFlavorsTable extends Migration
         Schema::create('flavors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id');
+            $table->foreignId('size_id');
             $table->string('name');
+            $table->float('price', 18, 2);
             $table->timestamps();
         });
     }

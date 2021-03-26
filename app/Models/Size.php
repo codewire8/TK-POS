@@ -12,4 +12,9 @@ class Size extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function sizes()
+    {
+        return $this->hasMany(Flavor::class);
+    }
 }

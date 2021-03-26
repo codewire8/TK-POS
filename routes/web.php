@@ -31,9 +31,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         return view('admin.category');
     })->name('category');
 
-    Route::get('/flavor', function () {
-        return view('admin.flavor');
-    })->name('flavor');
+    Route::get('/product', function () {
+        return view('admin.product');
+    })->name('product');
 
     Route::get('/size', function () {
         return view('admin.size');

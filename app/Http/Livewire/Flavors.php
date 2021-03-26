@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Category;
 use App\Models\Flavor;
+use App\Models\Size;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
@@ -17,7 +18,7 @@ class  Flavors extends Component
 
     // model variables
 
-    public $name, $category;
+    public $name, $category, $size, $price;
 
     // search variables
 
@@ -37,7 +38,9 @@ class  Flavors extends Component
                 'max:50',
                  Rule::unique('flavors', 'name')->ignore($this->modelId)
             ],
-            'category' => 'required'
+            'category' => 'required',
+            'size' => 'required',
+            'price' => 'required'
         ];
     }
 
@@ -50,7 +53,9 @@ class  Flavors extends Component
     {
         return [
             'name.required' => 'The flavor field is required!',
-            'category.required' => 'The category field is required!'
+            'category.required' => 'The category field is required!',
+            'category.size' => 'The size field is required!',
+            'category.price' => 'The price field is required!'
         ];
     }
 
@@ -64,6 +69,8 @@ class  Flavors extends Component
         $data = Flavor::find($this->modelId);
         $this->name = $data->name;
         $this->category = $data->category->id;
+        $this->size = $data->size->id;
+        $this->price = $data->price;
     }
 
      /**
@@ -75,7 +82,9 @@ class  Flavors extends Component
     {
         return [
             'name' => $this->name,
-            'category_id' => $this->category
+            'category_id' => $this->category,
+            'size_id' => $this->size,
+            'price' => $this->price,
         ];
     }
 
@@ -186,7 +195,8 @@ class  Flavors extends Component
     {
         return view('livewire.flavors', [
             'data' => $this->read(),
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'sizes' => Size::all()
         ]);
     }
 
