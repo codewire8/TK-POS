@@ -3,16 +3,30 @@
     {{-- Create button --}}
 
     <div class="grid grid-cols-2">
-        <div class="py-5">
-            <x-jet-button wire:click="createShowModal">
-{{ __('New Product') }}
-            </x-jet-button>
-        </div>
-        <div class="text-right py-5">
-            <input wire:model="query" type="text"
-                class="border-gray-300 focus:border-indigo-300 py-1 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-2/5"
-placeholder="Search product...">
+<div class="py-5 relative">
+            <div class="relative mt-3 md:mt-0">
+                <input type="text"
+                    class="bg-white rounded-md w-1/2 px-4 pl-8 py-1 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray-300 focus:border-indigo-300"
+                    wire:model.debounce.500ms="search" x-ref="search" @keydown.window="
+                                                                if (event.keyCode === 191) {
+                                                                    event.preventDefault();
+                                                                    $refs.search.focus();
+                                                                }
+                                                            " placeholder="Search product (Press '/' to focus)">
+                <div class="absolute top-0">
+                    <svg class="fill-current w-4 text-gray-500 mt-2 ml-2" viewBox="0 0 24 24">
+                        <path class="heroicon-ui"
+                            d="M16.32 14.9l5.39 5.4a1 1 0 01-1.42 1.4l-5.38-5.38a8 8 0 111.41-1.41zM10 16a6 6 0 100-12 6 6 0 000 12z" />
+                    </svg>
+                </div>
+                <div wire:loading="search" class="spinner top-0 right-1/2 mr-4 mt-4"></div>
+            </div>
 
+        </div>
+        <div class=" py-5 text-right">
+            <x-jet-button wire:click="createShowModal">
+                {{ __('New Product') }}
+</x-jet-button>
         </div>
     </div>
 
@@ -21,24 +35,30 @@ placeholder="Search product...">
     <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+<div class="shadow">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-100">
                             <tr>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-product
+pcode
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+description
+                                </th>
+<th scope="col" class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                    brand
+                                </th>
+<th scope="col" class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
                                     category
                                 </th>
-<th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-    size
-</th>
-<th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-    price
-</th>
+                                <th scope="col" class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                    price
+                                </th>
+<th scope="col" class="py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                    re-order level
+                                </th>
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only"></span>
                                 </th>
@@ -49,17 +69,23 @@ product
                             @foreach ($data as $item)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
-                                    {{ $item->name }}
+{{ $item->pcode }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+{{ $item->name . ' ( ' . $item->size->name . ' )' }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium text-center">
+                                        {{ $item->brand->name }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium text-center">
                                     {{ $item->category->name }}
                                 </td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
-    {{ $item->size->name }}
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
-    {{ $item->price }}
-</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium text-center">
+                                    {{ number_format($item->price, 2) }}
+                                </td>
+<td class="py-4 whitespace-nowrap text-sm text-gray-500 font-medium text-center">
+                                    {{ $item->reorder }}
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <x-jet-edit-button wire:click="updateShowModal({{ $item->id }})">
                                         <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
@@ -99,74 +125,85 @@ product
 
     <x-jet-dialog-modal wire:model="modalFormVisible">
         <x-slot name="title">
-{{ __('Product') }}
+            {{ __('Product') }}
         </x-slot>
 
         <x-slot name="content">
             <div class="mt-4">
+<x-jet-label for="bardcode" value="{{ __('Bar Code') }}" />
+                <x-jet-input id="bardcode" class="block mt-1 w-full" type="text" wire:model="barcode" />
+                </div>
+                <div class="mt-4">
                 @if ($modelId)
-<x-jet-label for="name" value="{{ __('Product') }}" />
+                <x-jet-label for="name" value="{{ __('Product') }}" />
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name"
                     wire:keydown.enter="update" />
                 @else
-<x-jet-label for="name" value="{{ __('Product') }}" />
+                <x-jet-label for="name" value="{{ __('Product') }}" />
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name"
                     wire:keydown.enter="create" />
                 @endif
                 @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
-                <x-jet-label for="category" value="{{ __('Category') }}" />
+<x-jet-label for="brand" value="{{ __('Brand') }}" />
                 @if ($modelId)
-                <select id="category" wire:model="category"
+<select id="brand" wire:model="brand"
                     class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
-                    <option value="">-Select Category-</option>
-                    @foreach ($categories as $item)
+@foreach ($brands as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
                 </select>
                 @else
-                <select id="category" wire:model="category"
+<select id="brand" wire:model="brand"
                     class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
-                    <option value="">-Select Category-</option>
-                    @foreach ($categories as $item)
+@foreach ($brands as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
                 </select>
                 @endif
-                @error('category') <span class="text-red-500">{{ $message }}</span> @enderror
+@error('brand') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="mt-4">
+                <x-jet-label for="category" value="{{ __('Category') }}" />
+<select id="category" wire:model="category"
+                    class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
+@foreach ($categories as $item)
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
+@error('category') <span class="text-red-500">{{ $message }}</span> @enderror
+                </div>
+                <div class="mt-4">
+                    <x-jet-label for="size  " value="{{ __('Size') }}" />
+                    <select id="size" wire:model="size"
+class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
+                    @foreach ($sizes as $item)
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+</select>
+                @error('size') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
+            <div class="mt-4">
+                @if ($modelId)
+                <x-jet-label for="price" value="{{ __('Price') }}" />
+<x-jet-input id="price" class="block mt-1 w-full" type="text" wire:model="price" wire:keydown.enter="update" />
+                @else
+<x-jet-label for="price" value="{{ __('Price') }}" />
+                <x-jet-input id="price" class="block mt-1 w-full" type="text" wire:model="price" wire:keydown.enter="create" />
+                @endif
+                @error('price') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
 <div class="mt-4">
-    <x-jet-label for="category" value="{{ __('Category') }}" />
-    @if ($modelId)
-    <select id="category" wire:model="size"
-        class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
-        <option value="">-Select size-</option>
-        @foreach ($sizes as $item)
-        <option value="{{ $item->id }}">{{ $item->name }}</option>
-        @endforeach
-    </select>
-    @else
-    <select id="category" wire:model="size"
-        class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
-        <option value="">-Select size-</option>
-        @foreach ($sizes as $item)
-        <option value="{{ $item->id }}">{{ $item->name }}</option>
-        @endforeach
-    </select>
-    @endif
-    @error('size') <span class="text-red-500">{{ $message }}</span> @enderror
-</div>
-<div class="mt-4">
-    @if ($modelId)
-    <x-jet-label for="price" value="{{ __('Price') }}" />
-    <x-jet-input id="price" class="block mt-1 w-full" type="text" wire:model="price" wire:keydown.enter="update" />
-    @else
-    <x-jet-label for="price" value="{{ __('Price    ') }}" />
-    <x-jet-input id="price" class="block mt-1 w-full" type="text" wire:model="price" wire:keydown.enter="create" />
-    @endif
-    @error('price') <span class="text-red-500">{{ $message }}</span> @enderror
-</div>
+                @if ($modelId)
+                <x-jet-label for="reorder" value="{{ __('Re-Order Level') }}" />
+                <x-jet-input id="reorder" class="block mt-1 w-full" type="text" wire:model="reorder" wire:keydown.enter="update" />
+                @else
+                <x-jet-label for="reorder" value="{{ __('Re-Order Level') }}" />
+                <x-jet-input id="reorder" class="block mt-1 w-full" type="text" wire:model="reorder" wire:keydown.enter="create" />
+                @endif
+                @error('reorder') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>
         </x-slot>
 
         <x-slot name="footer">
@@ -194,7 +231,7 @@ product
         </x-slot>
 
         <x-slot name="content">
-            {{ __('Are you sure you want to delete this flavor?') }}
+{{ __('Are you sure you want to delete this product?') }}
         </x-slot>
 
         <x-slot name="footer">

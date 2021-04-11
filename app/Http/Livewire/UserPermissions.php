@@ -2,22 +2,18 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Category;
-use Illuminate\Validation\Rule;
+use App\Models\UserPermission;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class  Categories extends Component
+class  UserPermissions extends Component
 {
     use WithPagination;
-
     public $modalFormVisible;
     public $modalConfirmDeleteVisible;
     public $modelId;
 
-    // model variables
-
-    public $name;
+    public $role, $routeName;
 
     // search variables
 
@@ -32,24 +28,21 @@ class  Categories extends Component
     public function rules()
     {
         return [
-            'name' => [
-                    'required',
-                    'max:50',
-                    Rule::unique('categories', 'name')->ignore($this->modelId),
-                ]
+            'role' => 'required',
+            'routeName' => 'required'
         ];
     }
 
-
-    /**
-     * Custom Error Validataion
+        /**
+     * Custom Error  Validataion
      *
      * @return void
      */
     public function messages()
     {
         return [
-            'name.required' => 'The category field is required!'
+            'role.required' => 'The role field is required!',
+            'routeName.required' => 'The route name field is required!',
         ];
     }
 
@@ -60,8 +53,9 @@ class  Categories extends Component
      */
     public function loadModel()
     {
-        $data = Category::find($this->modelId);
-        $this->name = $data->name;
+        $data = UserPermission::find($this->modelId);
+        $this->role = $data->role;
+        $this->routeName = $data->routeName;
     }
 
      /**
@@ -72,7 +66,8 @@ class  Categories extends Component
     public function modelData()
     {
         return [
-            'name' => $this->name
+            'role' => $this->role,
+            'route_name' => $this->routeName
         ];
     }
 
@@ -84,14 +79,9 @@ class  Categories extends Component
     public function create()
     {
         $this->validate();
-        Category::create($this->modelData());
+        UserPermission::create($this->modelData());
         $this->modalFormVisible = false;
         $this->reset();
-
-        $this->dispatchBrowserEvent('response', [
-            'icon' => 'success',
-            'title' => 'Successfully saved.'
-        ]);
     }
 
     /**
@@ -101,8 +91,7 @@ class  Categories extends Component
      */
     public function read()
     {
-        return Category::where('name', 'like', '%' . $this->query . '%')
-            ->paginate(10);
+        return UserPermission::paginate(10);
     }
 
     /**
@@ -113,13 +102,8 @@ class  Categories extends Component
     public function update()
     {
         $this->validate();
-        Category::find($this->modelId)->update($this->modelData());
+        UserPermission::find($this->modelId)->update($this->modelData());
         $this->modalFormVisible = false;
-
-        $this->dispatchBrowserEvent('response', [
-            'icon' => 'success',
-            'title' => 'Successfully updated.'
-        ]);
     }
 
     /**
@@ -129,13 +113,13 @@ class  Categories extends Component
      */
     public function delete()
     {
-        Category::destroy($this->modelId);
+        UserPermission::destroy($this->modelId);
         $this->modalConfirmDeleteVisible = false;
         $this->resetPage();
 
-         $this->dispatchBrowserEvent('response', [
+        $this->dispatchBrowserEvent('response', [
             'icon' => 'success',
-            'title' => 'Successfully deleted.'
+            'title' => 'Sucessfully deleted.'
         ]);
     }
 
@@ -178,10 +162,9 @@ class  Categories extends Component
         $this->modalConfirmDeleteVisible = true;
     }
 
-
     public function render()
     {
-        return view('livewire.categories', [
+        return view('livewire.user-permissions', [
             'data' => $this->read()
         ]);
     }

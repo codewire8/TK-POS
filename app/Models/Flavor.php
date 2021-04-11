@@ -6,17 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Originally a product model
+ * Actually a product model
  */
 class Flavor extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'pcode',
+        'barcode',
         'name',
+        'brand_id',
         'category_id',
         'size_id',
-        'price'
+        'price',
+        'reorder'
     ];
 
     public function category()
@@ -28,4 +32,10 @@ class Flavor extends Model
     {
         return $this->belongsTo(Size::class);
     }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
 }

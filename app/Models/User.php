@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -58,4 +59,13 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+    public static  function userRoleList()
+    {
+        return [
+            'admin' => 'Admin',
+            'cashier' => 'Cashier'
+        ];
+    }
 }

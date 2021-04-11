@@ -5,13 +5,13 @@
     <div class="grid grid-cols-2">
         <div class="py-5">
             <x-jet-button wire:click="createShowModal">
-                {{ __('New Category') }}
+                {{ __('New Brand') }}
             </x-jet-button>
         </div>
         <div class="text-right py-5">
             <input wire:model="query" type="text"
                 class="border-gray-300 focus:border-indigo-300 py-1 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-2/5"
-                placeholder="Search category...">
+                placeholder="Search brand...">
 
         </div>
     </div>
@@ -28,7 +28,7 @@
                             <tr>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                    category
+                                    brand
                                 </th>
 
                                 <th scope="col" class="relative px-6 py-3">
@@ -41,7 +41,7 @@
                             @foreach ($data as $item)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
-                                    {{ 'Record 1' }}
+                                    {{ $item->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <x-jet-edit-button wire:click="updateShowModal({{ $item->id }})">
@@ -75,12 +75,12 @@
 
     <x-jet-dialog-modal wire:model="modalFormVisible">
         <x-slot name="title">
-            {{ __('Create or Update Form') }}
+            {{ __('Save Brand') }}
         </x-slot>
 
         <x-slot name="content">
             <div class="mt-4">
-                <x-jet-label for="label" value="{{ __('Label') }}" />
+                <x-jet-label for="label" value="{{ __('Brand') }}" />
                 @if ($modelId)
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name"
                     wire:keydown.enter="update" />
@@ -88,15 +88,7 @@
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name"
                     wire:keydown.enter="create" />
                 @endif
-                @error('label') <span class="error">{{ $message }}</span> @enderror
-            </div>
-            <div class="mt-4">
-                <x-jet-label for="type" value="{{ __('Type') }}" />
-                <select wire:model="type" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
-                    <option value="SidebarNav">SidebarNav</option>
-                    <option value="TopNav">TopNav</option>
-                </select>
-                @error('type') <span class="text-red-500">{{ $message }}</span> @enderror
+                @error('name') <span class="error">{{ $message }}</span> @enderror
             </div>
         </x-slot>
 
@@ -121,11 +113,11 @@
     <!-- Delete User Confirmation Modal -->
     <x-jet-dialog-modal wire:model="modalConfirmDeleteVisible">
         <x-slot name="title">
-            {{ __('Delete Navigation Item') }}
+            {{ __('Delete Brand') }}
         </x-slot>
 
         <x-slot name="content">
-            {{ __('Are you sure you want to delete this navigation item?') }}
+            {{ __('Are you sure you want to delete this item?') }}
         </x-slot>
 
         <x-slot name="footer">
@@ -140,3 +132,9 @@
     </x-jet-dialog-modal>
 
 </div>
+
+<script>
+    window.addEventListener('response', event => {
+    Toast.fire({icon: event.detail.icon, title: event.detail.title });
+    })
+</script>

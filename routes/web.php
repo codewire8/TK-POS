@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,21 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+Route::group(['middleware' => [
+    'auth:sanctum',
+    'verified',
+    'accessrole'
+]], function () {
+
+    // Admin Panel
+
+    Route::get('/user', function () {
+        return view('admin.user');
+    })->name('user');
+
+     Route::get('/user-permission', function () {
+        return view('admin.user-permission');
+    })->name('user-permission');
 
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -38,5 +53,15 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/size', function () {
         return view('admin.size');
     })->name('size');
+
+    Route::get('/brand', function () {
+        return view('admin.brand');
+    })->name('brand');
+
+    // Cashier Panel
+
+    Route::get('/cashier', function () {
+        return view('user.cashier');
+    })->name('cashier');
 
 });

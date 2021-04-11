@@ -22,6 +22,9 @@ class JetstreamServiceProvider extends ServiceProvider
         $this->registerComponent('edit-button');
         $this->registerComponent('delete-action-button');
         $this->registerComponent('select-list-item');
+        $this->registerComponent('search-button');
+        $this->registerComponent('menu-button');
+        $this->registerComponent('search-input');
     }
 
     /**
@@ -34,6 +37,18 @@ class JetstreamServiceProvider extends ServiceProvider
         $this->configurePermissions();
 
         Jetstream::deleteUsersUsing(DeleteUser::class);
+
+         // register new LoginResponse
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\LoginResponse::class,
+            \App\Http\Responses\LoginResponse::class
+        );
+
+        // register new TwofactorLoginResponse
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\TwoFactorLoginResponse::class,
+            \App\Http\Responses\LoginResponse::class
+        );
     }
 
     /**

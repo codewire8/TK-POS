@@ -2,20 +2,19 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Category;
-use Illuminate\Validation\Rule;
+use App\Models\Brand;
 use Livewire\Component;
+use Illuminate\Validation\Rule;
 use Livewire\WithPagination;
 
-class  Categories extends Component
+class  Brands extends Component
 {
     use WithPagination;
-
     public $modalFormVisible;
     public $modalConfirmDeleteVisible;
     public $modelId;
 
-    // model variables
+    // variables
 
     public $name;
 
@@ -32,24 +31,23 @@ class  Categories extends Component
     public function rules()
     {
         return [
-            'name' => [
+            'name' =>  [
                     'required',
                     'max:50',
-                    Rule::unique('categories', 'name')->ignore($this->modelId),
+                    Rule::unique('brands', 'name')->ignore($this->modelId),
                 ]
         ];
     }
 
-
-    /**
-     * Custom Error Validataion
+        /**
+     * Custom Error  Validataion
      *
      * @return void
      */
     public function messages()
     {
         return [
-            'name.required' => 'The category field is required!'
+            'message.required' => 'The brand field is required!'
         ];
     }
 
@@ -60,7 +58,7 @@ class  Categories extends Component
      */
     public function loadModel()
     {
-        $data = Category::find($this->modelId);
+        $data = Brand::find($this->modelId);
         $this->name = $data->name;
     }
 
@@ -84,14 +82,9 @@ class  Categories extends Component
     public function create()
     {
         $this->validate();
-        Category::create($this->modelData());
+        Brand::create($this->modelData());
         $this->modalFormVisible = false;
         $this->reset();
-
-        $this->dispatchBrowserEvent('response', [
-            'icon' => 'success',
-            'title' => 'Successfully saved.'
-        ]);
     }
 
     /**
@@ -101,7 +94,8 @@ class  Categories extends Component
      */
     public function read()
     {
-        return Category::where('name', 'like', '%' . $this->query . '%')
+        return Brand::where('name', 'like', '%' . $this->query . '%')
+            ->orderby('name')
             ->paginate(10);
     }
 
@@ -113,7 +107,7 @@ class  Categories extends Component
     public function update()
     {
         $this->validate();
-        Category::find($this->modelId)->update($this->modelData());
+        Brand::find($this->modelId)->update($this->modelData());
         $this->modalFormVisible = false;
 
         $this->dispatchBrowserEvent('response', [
@@ -129,11 +123,11 @@ class  Categories extends Component
      */
     public function delete()
     {
-        Category::destroy($this->modelId);
+        Brand::destroy($this->modelId);
         $this->modalConfirmDeleteVisible = false;
         $this->resetPage();
 
-         $this->dispatchBrowserEvent('response', [
+        $this->dispatchBrowserEvent('response', [
             'icon' => 'success',
             'title' => 'Successfully deleted.'
         ]);
@@ -178,10 +172,9 @@ class  Categories extends Component
         $this->modalConfirmDeleteVisible = true;
     }
 
-
     public function render()
     {
-        return view('livewire.categories', [
+        return view('livewire.brands', [
             'data' => $this->read()
         ]);
     }

@@ -23,10 +23,13 @@
 
 <body>
     <div class="flex h-screen bg-gray-200 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
+@if (auth()->user()->role === 'admin')
         @include('layouts.menu')
         @include('layouts.mobile-menu')
+@else
 
-        <div class="flex flex-col flex-1 w-full">
+@endif
+<div class="w-full">
             @include('layouts.navigation-dropdown')
             <main class="h-full overflow-y-auto">
                 {{ $slot }}

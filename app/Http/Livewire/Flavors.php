@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Flavor;
 use App\Models\Size;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
+use App\Helpers\Helper;
 
 class  Flavors extends Component
 {
@@ -18,11 +20,11 @@ class  Flavors extends Component
 
     // model variables
 
-    public $name, $category, $size, $price;
+    public $barcode, $name, $brand, $category, $size, $price, $reorder;
 
     // search variables
 
-    public $query;
+    public $search;
 
     /**
      * Form Validation.
@@ -54,8 +56,8 @@ class  Flavors extends Component
         return [
             'name.required' => 'The flavor field is required!',
             'category.required' => 'The category field is required!',
-            'category.size' => 'The size field is required!',
-            'category.price' => 'The price field is required!'
+            'size.required' => 'The size field is required!',
+            'price.required' => 'The price field is required!'
         ];
     }
 
@@ -67,10 +69,14 @@ class  Flavors extends Component
     public function loadModel()
     {
         $data = Flavor::find($this->modelId);
+        $this->pcode = $data->pcode;
+        $this->barcode = $data->barcode;
         $this->name = $data->name;
+        $this->brand = $data->brand_id;
         $this->category = $data->category->id;
         $this->size = $data->size->id;
         $this->price = $data->price;
+        $this->reorder = $data->reorder;
     }
 
      /**
@@ -78,13 +84,31 @@ class  Flavors extends Component
      *
      * @return void
      */
-    public function modelData()
+    public function createmodelData()
     {
         return [
+            'pcode' => Helper::IDGenerator(new Flavor, 'pcode', 5, 'P'),
+            'barcode' => $this->barcode,
             'name' => $this->name,
+            'brand_id' => $this->brand,
             'category_id' => $this->category,
             'size_id' => $this->size,
             'price' => $this->price,
+            'reorder' => $this->reorder
+        ];
+    }
+
+
+    public function updatemodelData()
+    {
+        return [
+            'barcode' => $this->barcode,
+            'name' => $this->name,
+            'brand_id' => $this->brand,
+            'category_id' => $this->category,
+            'size_id' => $this->size,
+            'price' => $this->price,
+            'reorder' => $this->reorder
         ];
     }
 
@@ -96,7 +120,7 @@ class  Flavors extends Component
     public function create()
     {
         $this->validate();
-        Flavor::create($this->modelData());
+        Flavor::create($this->createmodelData());
         $this->modalFormVisible = false;
         $this->reset();
 
@@ -113,10 +137,14 @@ class  Flavors extends Component
      */
     public function read()
     {
-        return Flavor::with('category')
-            ->where('name', 'like', '%' . $this->query . '%')
+        return Flavor::where('name', 'like', '%' . $this->search . '%')
+            ->orWhere('pcode', 'like', '%' . $this->search . '%')
+            ->with('category')
+            ->with('size')
+            ->with('brand')
             ->paginate(10);
     }
+
 
     /**
      * Update function.
@@ -126,7 +154,7 @@ class  Flavors extends Component
     public function update()
     {
         $this->validate();
-        Flavor::find($this->modelId)->update($this->modelData());
+        Flavor::find($this->modelId)->update($this->updatemodelData());
         $this->modalFormVisible = false;
 
         $this->dispatchBrowserEvent('response', [
@@ -135,6 +163,7 @@ class  Flavors extends Component
         ]);
         $this->reset();
     }
+
 
     /**
      * Delete function.
@@ -196,7 +225,8 @@ class  Flavors extends Component
         return view('livewire.flavors', [
             'data' => $this->read(),
             'categories' => Category::all(),
-            'sizes' => Size::all()
+            'sizes' => Size::all(),
+            'brands' => Brand::all(),
         ]);
     }
 
