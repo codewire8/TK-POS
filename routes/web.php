@@ -42,6 +42,18 @@ Route::group(['middleware' => [
         return view('admin.product');
     })->name('product');
 
+    Route::get('/vendor', function () {
+        return view('admin.vendor');
+    })->name('vendor');
+
+    Route::get('/stock-entry', function () {
+        return view('admin.stock-entry');
+    })->name('stock-entry');
+
+    Route::get('/stock-in-history', function () {
+        return view('admin.stock-in-history');
+    })->name('stock-in-history');
+
     Route::get('/category', function () {
         return view('admin.category');
     })->name('category');

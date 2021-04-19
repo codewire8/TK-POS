@@ -1,5 +1,5 @@
 <div class="text-gray-500 dark:text-gray-400">
-<ul>
+    <ul>
 
         <div class="flex px-4 py-2">
 
@@ -13,7 +13,7 @@
                 <small>Administrator</small>
                 @endif
             </span>
-</div>
+        </div>
         <li
             class="relative px-6 py-2 {!! request()->routeIs('dashboard') ? 'py-2 px-3 focus:outline-none bg-indigo-50' : '' !!}">
             {!! request()->routeIs('dashboard') ? '<span
@@ -21,11 +21,11 @@
                 aria-hidden="true"></span>' : '' !!}
             <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                 href="{{route('dashboard')}}">
-                <svg class="w-5 h-5" ari a-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                    </path>
+<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
                 </svg>
                 <span class="ml-2 pt-1">{{ __('Dashboard') }}</span>
             </a>
@@ -33,7 +33,8 @@
 
 <li class="relative px-6 py-2 {!! request()->routeIs('product') ? 'py-2 px-3 focus:outline-none bg-indigo-50' : '' !!}">
             {!! request()->routeIs('product') ? '<span
-                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>' : ''
+class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                aria-hidden="true"></span>' : ''
             !!}
             <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                 href="{{route('product')}}">
@@ -44,16 +45,65 @@
                 <span class="ml-2 pt-1">{{ __('Product') }}</span>
             </a>
         </li>
+<li class="relative px-6 py-2 {!! request()->routeIs('vendor') ? 'py-2 px-3 focus:outline-none bg-indigo-50' : '' !!}">
+    {!! request()->routeIs('vendor') ? '<span
+        class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>' : ''
+    !!}
+    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+        href="{{route('vendor')}}">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <span class="ml-2 pt-1">{{ __('Vendor') }}</span>
+    </a>
+</li>
+<li class="relative px-6 py-2">
+    <div @click.away="openStock = false" class="relative" x-data="{ openStock: false }">
+        <button @click="openStock = !openStock"
+            class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100 focus:outline-none">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            <span class="ml-2 pt-1">Stock</span>
+            <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': openStock, 'rotate-0': !openStock}"
+                class="inline w-4 h-4 mt-1 ml-28 transition-transform duration-200 transform md:-mt-1">
+                <path fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path>
+            </svg>
+        </button>
+        <div x-show="openStock" x-transition:enter="transition ease-out duration-100"
+            x-transition:enter-start="transform opacity-0 scale-95"
+            x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75"
+            x-transition:leave-start="transform opacity-100 scale-100"
+            x-transition:leave-end="transform opacity-0 scale-95">
+            <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
+
+                <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                    href="{{route('stock-entry')}}">
+                    <span class="ml-4">{{ __('Stock Entry') }}</span>
+                </a>
+
+                <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                    href="{{route('stock-in-history')}}">
+                    <span class="ml-4">{{ __('Stock In History') }}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</li>
         <li class="relative px-6 py-2">
-<div @click.away="openUser = false" class="relative" x-data="{ openUser: false }">
+            <div @click.away="openUser = false" class="relative" x-data="{ openUser: false }">
                 <button @click="openUser = !openUser"
                     class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100 focus:outline-none">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                     <span class="ml-2 pt-1">Manage Users</span>
-                    <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': openUser, 'rotate-0': !openUser}"
+<svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': openUser, 'rotate-0': !openUser}"
                         class="inline w-4 h-4 mt-1 ml-14 transition-transform duration-200 transform md:-mt-1">
                         <path fill-rule="evenodd"
                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -61,8 +111,10 @@
                     </svg>
                 </button>
                 <div x-show="openUser" x-transition:enter="transition ease-out duration-100"
-                    x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100"
+x-transition:enter-start="transform opacity-0 scale-95"
+                    x-transition:enter-end="transform opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-75"
+                    x-transition:leave-start="transform opacity-100 scale-100"
                     x-transition:leave-end="transform opacity-0 scale-95">
                     <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
 
@@ -78,9 +130,9 @@
                     </div>
                 </div>
             </div>
-            </li>
+        </li>
 
-<li class="relative px-6 py-2">
+        <li class="relative px-6 py-2">
             <div @click.away="openFM = false" class="relative" x-data="{ openFM: false }">
                 <button @click="openFM = !openFM"
                     class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100 focus:outline-none">
@@ -91,21 +143,21 @@
                             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                     <span class="ml-2 pt-1">File Maintenance</span>
-<svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': openFM, 'rotate-0': !openFM}"
+                    <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': openFM, 'rotate-0': !openFM}"
                         class="inline w-4 h-4 mt-1 ml-10 transition-transform duration-200 transform md:-mt-1">
                         <path fill-rule="evenodd"
                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                             clip-rule="evenodd"></path>
                     </svg>
                 </button>
-<div x-show="openFM" x-transition:enter="transition ease-out duration-100"
+                <div x-show="openFM" x-transition:enter="transition ease-out duration-100"
                     x-transition:enter-start="transform opacity-0 scale-95"
                     x-transition:enter-end="transform opacity-100 scale-100"
                     x-transition:leave="transition ease-in duration-75"
                     x-transition:leave-start="transform opacity-100 scale-100"
-x-transition:leave-end="transform opacity-0 scale-95">
+                    x-transition:leave-end="transform opacity-0 scale-95">
                     <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
-<a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                        <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                             href="{{route('brand')}}">
                             <span class="ml-4">{{ __('Brand') }}</span>
                         </a>
@@ -126,14 +178,14 @@ x-transition:leave-end="transform opacity-0 scale-95">
         </li>
 
 
-<li class="relative px-6 py-2">
+        <li class="relative px-6 py-2">
 
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                     href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
-                    <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+<svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+    viewBox="0 0 24 24" stroke="currentColor">
                         <path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1">
                         </path>
                     </svg>

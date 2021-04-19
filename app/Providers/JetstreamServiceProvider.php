@@ -22,9 +22,11 @@ class JetstreamServiceProvider extends ServiceProvider
         $this->registerComponent('edit-button');
         $this->registerComponent('delete-action-button');
         $this->registerComponent('select-list-item');
+        $this->registerComponent('date-input');
         $this->registerComponent('search-button');
         $this->registerComponent('menu-button');
         $this->registerComponent('search-input');
+        $this->registerComponent('modal-lg');
     }
 
     /**

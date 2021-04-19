@@ -29,10 +29,10 @@ class EnsureUserRoleIsAllowedToAccess
                 || in_array($currentRouteName, $this->defaultUserAccessRole()[$userRole])) {
                 return $next($request);
             } else {
-                abort(403, 'Unathorized page.');
+                abort(403, 'Unauthorized page.');
             }
         } catch (\Throwable $th) {
-            abort(403, 'You are not allowede to access this page.');
+            abort(403, 'You are not allowed to access this page.');
         }
 
     }

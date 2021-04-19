@@ -2,6 +2,8 @@
 
 require("alpinejs");
 
+ import flatpickr from "flatpickr";
+
 // Sweetalert notifications
 
 import Swal from "sweetalert2";
@@ -15,3 +17,5 @@ const Toast = Swal.mixin({
 });
 
 window.Toast = Toast;
+
+window.flatpickr = flatpickr;

@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\{{}};
 use Livewire\Component;
+use Illuminate\Validation\Rule;
 use Livewire\WithPagination;
 
 class  {{}} extends Component

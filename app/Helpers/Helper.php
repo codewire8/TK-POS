@@ -26,7 +26,7 @@ class Helper
             $zeroes.="0";
         }
 
-        return $prefix.'-'.$zeroes.$last_number;
+        return $prefix.''.$zeroes.$last_number;
     }
 }
 

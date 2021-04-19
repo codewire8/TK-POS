@@ -3,7 +3,7 @@
     <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+<div class="shadow overflow-hidden border-b border-gray-300 rounded-md">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-100">
                             <tr>
@@ -31,9 +31,16 @@
                                     {{ $item->role }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <x-jet-edit-button wire:click="updateShowModal({{ $item->id }})">
-                                        {{ __('Edit') }}
-                                    </x-jet-edit-button>
+<div class="flex item-center justify-end">
+    <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer"
+        wire:click="updateShowModal({{ $item->id }})">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap=" round" stroke-linejoin="round" stroke-width="2"
+                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+            </path>
+        </svg>
+    </div>
+</div>
                                 </td>
                             </tr>
                             @endforeach
@@ -55,13 +62,13 @@
 
     <x-jet-dialog-modal wire:model="modalFormVisible">
         <x-slot name="title">
-            {{ __('Update User') }}
+{{ __('Update User Role') }}
         </x-slot>
 
         <x-slot name="content">
             <div class="mt-4">
                 <x-jet-label for="name" value="{{ __('Name') }}" />
-                <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name"
+<x-jet-input id="name" class="block mt-1 w-full" disabled type="text" wire:model="name"
                     wire:keydown.enter="update" />
 
                 @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -69,8 +76,7 @@
             <div class="mt-4">
                 <x-jet-label for="type" value="{{ __('Role') }}" />
                 <select wire:model="role"
-                    class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
-                    <option value="">-- Select a Role --</option>
+class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
                     @foreach (App\Models\User::userRoleList() as $key => $value)
                     <option value="{{ $key }}">{{ $value }}</option>
                     @endforeach

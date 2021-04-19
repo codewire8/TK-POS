@@ -2,24 +2,25 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\UserPermission;
+use App\Models\Vendor;
 use Livewire\Component;
+use Illuminate\Validation\Rule;
 use Livewire\WithPagination;
 
-class  UserPermissions extends Component
+class  Vendors extends Component
 {
     use WithPagination;
-
     public $modalFormVisible;
     public $modalConfirmDeleteVisible;
     public $modelId;
 
-    public $role;
-    public $routeName;
+    // public varialbes
+
+    public $name, $address, $contact_person, $contact_person_telno, $contact_person_email;
 
     // search variables
 
-    public $query;
+    public $search;
 
     /**
      * Form Validation.
@@ -30,8 +31,11 @@ class  UserPermissions extends Component
     public function rules()
     {
         return [
-            'role' => 'required',
-            'routeName' => 'required'
+            'name' => [
+                'required',
+                'max:255',
+                 Rule::unique('vendors', 'name')->ignore($this->modelId)
+            ]
         ];
     }
 
@@ -43,8 +47,7 @@ class  UserPermissions extends Component
     public function messages()
     {
         return [
-            'role.required' => 'The role field is required!',
-            'routeName.required' => 'The route name field is required!',
+            'name.required' => 'The vendor field is required!'
         ];
     }
 
@@ -55,9 +58,12 @@ class  UserPermissions extends Component
      */
     public function loadModel()
     {
-        $data = UserPermission::find($this->modelId);
-        $this->role = $data->role;
-        $this->routeName = $data->route_name;
+        $data = Vendor::find($this->modelId);
+        $this->name = $data->name;
+        $this->address = $data->address;
+        $this->contact_person = $data->contact_person;
+        $this->contact_person_telno = $data->contact_person_telno;
+        $this->contact_person_email = $data->contact_person_email;
     }
 
      /**
@@ -68,8 +74,11 @@ class  UserPermissions extends Component
     public function modelData()
     {
         return [
-            'role' => $this->role,
-            'route_name' => $this->routeName
+            'name' => $this->name,
+            'address' => $this->address,
+            'contact_person' => $this->contact_person,
+            'contact_person_telno' => $this->contact_person_telno,
+            'contact_person_email' => $this->contact_person_email,
         ];
     }
 
@@ -81,9 +90,14 @@ class  UserPermissions extends Component
     public function create()
     {
         $this->validate();
-        UserPermission::create($this->modelData());
+        Vendor::create($this->modelData());
         $this->modalFormVisible = false;
         $this->reset();
+
+        $this->dispatchBrowserEvent('response', [
+            'icon' => 'success',
+            'title' => 'Sucessfully saved.'
+        ]);
     }
 
     /**
@@ -93,8 +107,7 @@ class  UserPermissions extends Component
      */
     public function read()
     {
-        return UserPermission::where('role', 'like', '%' . $this->query . '%')
-            ->orWhere('route_name', 'like', '%' . $this->query . '%')
+        return Vendor::where('name', 'like', '%' . $this->search . '%')
             ->paginate(10);
     }
 
@@ -106,8 +119,13 @@ class  UserPermissions extends Component
     public function update()
     {
         $this->validate();
-        UserPermission::find($this->modelId)->update($this->modelData());
+        Vendor::find($this->modelId)->update($this->modelData());
         $this->modalFormVisible = false;
+
+        $this->dispatchBrowserEvent('response', [
+            'icon' => 'success',
+            'title' => 'Sucessfully updated.'
+        ]);
     }
 
     /**
@@ -117,11 +135,11 @@ class  UserPermissions extends Component
      */
     public function delete()
     {
-        UserPermission::destroy($this->modelId);
+        Vendor::destroy($this->modelId);
         $this->modalConfirmDeleteVisible = false;
         $this->resetPage();
 
-        $this->dispatchBrowserEvent('response', [
+         $this->dispatchBrowserEvent('response', [
             'icon' => 'success',
             'title' => 'Sucessfully deleted.'
         ]);
@@ -168,7 +186,7 @@ class  UserPermissions extends Component
 
     public function render()
     {
-        return view('livewire.user-permissions', [
+        return view('livewire.vendors', [
             'data' => $this->read()
         ]);
     }

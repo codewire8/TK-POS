@@ -61,7 +61,7 @@ class User extends Authenticatable
     ];
 
 
-    public static  function userRoleList()
+    public static function userRoleList()
     {
         return [
             'admin' => 'Admin',

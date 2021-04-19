@@ -30,7 +30,10 @@ class UserPermission extends Model
              'size',
              'user',
              'user-permission',
-             'brand'
+             'brand',
+             'vendor',
+             'stock-entry',
+             'stock-in-history'
         ];
     }
 
@@ -47,6 +50,7 @@ class UserPermission extends Model
             $model = static::where('role', $userRole)
                 ->where('route_name', $routeName)
                 ->first();
+
             return $model ? true : false;
         } catch (\Throwable $th) {
             return false;
