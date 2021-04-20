@@ -38,8 +38,17 @@ class  Flavors extends Component
             'name' => [
                 'required',
                 'max:50',
-                 Rule::unique('flavors', 'name')->ignore($this->modelId)
+                 Rule::unique('flavors')->where(function ($query) {
+
+                     return $query
+                        ->whereName($this->name)
+                        ->whereBrandId($this->brand)
+                        ->whereCategoryId($this->category)
+                        ->whereSizeId($this->size);
+
+                 })->ignore($this->modelId),
             ],
+            'brand' => 'required',
             'category' => 'required',
             'size' => 'required',
             'price' => 'required'
@@ -54,10 +63,10 @@ class  Flavors extends Component
     public function messages()
     {
         return [
-            'name.required' => 'The flavor field is required!',
-            'category.required' => 'The category field is required!',
-            'size.required' => 'The size field is required!',
-            'price.required' => 'The price field is required!'
+            'name.unique' => 'This product is already exist in our records.',
+            'category.required' => 'The category field is required.',
+            'size.required' => 'The size field is required.',
+            'price.required' => 'The price field is required.'
         ];
     }
 

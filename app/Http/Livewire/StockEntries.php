@@ -6,6 +6,7 @@ use App\Models\StockEntry;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Helpers\Helper;
+use App\Models\Flavor;
 use App\Models\Vendor;
 use Carbon\Carbon;
 
@@ -105,6 +106,12 @@ class  StockEntries extends Component
         ]);
     }
 
+    public function products()
+    {
+        return Flavor::where('pcode', 'like', '%' . $this->query . '%')
+            ->orWhere('name', 'like', '%' . $this->query . '%')
+            ->with('size')->paginate(10);
+    }
 
     /**
      * Display List of products
@@ -143,7 +150,8 @@ class  StockEntries extends Component
     public function render()
     {
         return view('livewire.stock-entries', [
-            'vendors' => Vendor::all()
+            'vendors' => Vendor::all(),
+            'products' => $this->products()
         ]);
     }
 

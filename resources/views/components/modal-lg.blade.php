@@ -1,4 +1,4 @@
-@props(['id' => null, 'maxWidth' => "w-screen"])
+@props(['id' => null, 'maxWidth' => "md"])
 
 <x-jet-modal :id="$id" :maxWidth="$maxWidth" {{  $attributes }}>
     <div class="px-6 py-4">
