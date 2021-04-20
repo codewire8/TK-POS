@@ -3,10 +3,10 @@
     {{-- Create button --}}
 
     <div class="grid grid-cols-2">
-<div class="relative pb-4">
-    <div class="relative md:mt-0">
+        <div class="relative pb-4">
+            <div class="relative md:mt-0">
                 <input type="text"
-class="bg-white rounded-md w-1/2 px-4 pl-8 py-1 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray-300 focus:border-indigo-300"
+                    class="bg-white rounded-md w-1/2 px-4 pl-8 py-1 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray-300 focus:border-indigo-300"
                     wire:model.debounce.500ms="search" x-ref="search" @keydown.window="
 if (event.keyCode === 113) {
                                                                     event.preventDefault();
@@ -14,30 +14,30 @@ if (event.keyCode === 113) {
                                                                 }
 " placeholder="Search (Press '[F2]' to focus)">
                 <div class="absolute top-0">
-<svg class="fill-current w-4 text-gray-500 mt-2 ml-2" viewBox="0 0 24 24">
+                    <svg class="fill-current w-4 text-gray-500 mt-2 ml-2" viewBox="0 0 24 24">
                         <path class="heroicon-ui"
                             d="M16.32 14.9l5.39 5.4a1 1 0 01-1.42 1.4l-5.38-5.38a8 8 0 111.41-1.41zM10 16a6 6 0 100-12 6 6 0 000 12z" />
                     </svg>
                 </div>
-<div wire:loading="search" class="spinner top-0 right-1/2 mr-4 mt-4"></div>
-</div>
+                <div wire:loading="search" class="spinner top-0 right-1/2 mr-4 mt-4"></div>
+            </div>
         </div>
-<div class="relative pb-4">
+        <div class="relative pb-4">
 
-    <div class="text-right">
+            <div class="text-right">
                 <x-jet-button wire:click="createShowModal">
                     {{ __('New Product') }}
                 </x-jet-button>
             </div>
         </div>
-</div>
+    </div>
 
     {{-- The data table --}}
 
     <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-<div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-100">
                             <tr>
@@ -89,20 +89,24 @@ if (event.keyCode === 113) {
                                     {{ $item->reorder }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <x-jet-edit-button wire:click="updateShowModal({{ $item->id }})">
-                                        <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
-<path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                            <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </x-jet-edit-button>
-                                    <x-jet-delete-action-button wire:click="deleteShowModal({{ $item->id }})">
-                                        <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </x-jet-delete-action-button>
+<div class="flex item-center justify-end">
+                                        <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer"
+                                            wire:click="updateShowModal({{ $item->id }})">
+                                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap=" round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                                </path>
+                                            </svg>
+</div>
+                                        <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer"
+                                            wire:click="deleteShowModal({{ $item->id }})">
+                                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                </path>
+                                            </svg>
+</div>
+                                        </div>
                                 </td>
                             </tr>
                             @endforeach
@@ -135,41 +139,27 @@ if (event.keyCode === 113) {
                 <x-jet-label for="bardcode" value="{{ __('Bar Code') }}" />
                 <x-jet-input id="bardcode" class="block mt-1 w-full" type="text" wire:model="barcode" />
             </div>
-            <div class="mt-4">
-                @if ($modelId)
+<div class="mt-4">
                 <x-jet-label for="name" value="{{ __('Product') }}" />
-                <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name"
-                    wire:keydown.enter="update" />
-                @else
-                <x-jet-label for="name" value="{{ __('Product') }}" />
-                <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name"
-                    wire:keydown.enter="create" />
-                @endif
+<x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name" />
                 @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
-                <x-jet-label for="brand" value="{{ __('Brand') }}" />
-                @if ($modelId)
+<x-jet-label for="brand" value="{{ __('Brand') }}" />
                 <select id="brand" wire:model="brand"
                     class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
+<option value="">---</option>
                     @foreach ($brands as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
-                </select>
-                @else
-                <select id="brand" wire:model="brand"
-                    class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
-                    @foreach ($brands as $item)
-                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                    @endforeach
-                </select>
-                @endif
+</select>
                 @error('brand') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
                 <x-jet-label for="category" value="{{ __('Category') }}" />
                 <select id="category" wire:model="category"
                     class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
+<option value="">---</option>
                     @foreach ($categories as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
@@ -180,6 +170,7 @@ if (event.keyCode === 113) {
                 <x-jet-label for="size  " value="{{ __('Size') }}" />
                 <select id="size" wire:model="size"
                     class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
+<option value="">---</option>
                     @foreach ($sizes as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
@@ -229,7 +220,7 @@ if (event.keyCode === 113) {
     <!-- Delete User Confirmation Modal -->
     <x-jet-dialog-modal wire:model="modalConfirmDeleteVisible">
         <x-slot name="title">
-            {{ __('Delete Flavor') }}
+{{ __('Product') }}
         </x-slot>
 
         <x-slot name="content">

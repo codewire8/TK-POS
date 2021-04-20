@@ -129,45 +129,49 @@
 
         <x-jet-modal-lg wire:model="modalFormVisible">
             <x-slot name="title">
-                {{ __('Search Product') }}
+<div class="grid grid-cols-2">
+                    <div class="relative">
+                        {{ __('Search Product') }}
+</div>
+                    <div class="relative flex justify-end">
+                        <div class="md:mt-0">
+                            <input type="text"
+                                class="bg-white rounded-2xl w-72 px-4 pl-8 py-1 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray-300 focus:border-indigo-300"
+                                wire:model.debounce.500ms="query" x-ref="query" @keydown.window="
+                        if (event.keyCode === 113) {
+                                                                                            event.preventDefault();
+                                                                                            $refs.query.focus();
+                                                                                        }
+                        " placeholder="Search (Press '[F2]' to focus)">
+                            <div class="absolute top-0">
+                                <svg class="fill-current w-4 text-gray-500 mt-2 ml-3" viewBox="0 0 24 24">
+                                    <path class="heroicon-ui"
+                                        d="M16.32 14.9l5.39 5.4a1 1 0 01-1.42 1.4l-5.38-5.38a8 8 0 111.41-1.41zM10 16a6 6 0 100-12 6 6 0 000 12z" />
+                                </svg>
+                            </div>
+                            <div wire:loading="query" class="spinner top-0 right-0 left-96 mt-4"></div>
+                        </div>
+                    </div>
+
+                    </div>
             </x-slot>
 
             <x-slot name="content">
-                <!-- This example requires Tailwind CSS v2.0+ -->
+
                 <div class="flex flex-col">
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                 <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-gray-50">
+<thead class="bg-gray-600">
                                         <tr>
                                             <th scope="col"
-                                                class="px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">
-                                                PCode
+class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                                pcode
                                             </th>
                                             <th scope="col"
-                                                class="px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">
-                                                Bar Code
-                                            </th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">
-                                                Description
-                                            </th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">
-                                                Brand
-                                            </th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">
-                                                Category
-                                            </th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">
-                                                Price
-                                            </th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">
-                                                Qty
+class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                                description
                                             </th>
                                             <th scope="col" class="relative px-6 py-3">
                                                 <span class="sr-only"></span>
@@ -175,27 +179,50 @@
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
+@if ($products->count())
+                                        @foreach ($products as $item)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ $item->pcode }}
                                             </td>
-
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+                                                {{ $item->name . ' ( ' . $item->size->name . ' )' }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <div class="flex item-center justify-end">
+                                                    <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer">
+                                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                            <path fill-rule="evenodd"
+                                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                                clip-rule="evenodd" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+</td>
                                         </tr>
-
-                                        <!-- More people... -->
+@endforeach
+                                        @else
+                                        <tr>
+                                            <td class="px-6 py-4 text-sm whitespace-no-wrap" colspan="4">No results
+                                                found!</td>
+                                        </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
+<div class="mt-5">
+                    {{ $products->links() }}
+                </div>
             </x-slot>
 
             <x-slot name="footer">
                 <x-jet-secondary-button wire:click="$toggle('modalFormVisible')" wire:loading.attr="disabled">
-                    {{ __('Nevermind') }}
+{{ __('Cancel') }}
                 </x-jet-secondary-button>
             </x-slot>
         </x-jet-modal-lg>
 
-    </div>
+</div>
