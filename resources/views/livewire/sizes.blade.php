@@ -3,7 +3,7 @@
     {{-- Create button --}}
 
     <div class="grid grid-cols-2">
-<div class="py-5 relative">
+        <div class="py-5 relative">
             <div class="relative mt-3 md:mt-0">
                 <input type="text"
                     class="bg-white rounded-md w-1/2 px-4 pl-8 py-1 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray-300 focus:border-indigo-300"
@@ -27,7 +27,7 @@
         <div class=" py-5 text-right">
             <x-jet-button wire:click="createShowModal">
                 {{ __('New Size') }}
-</x-jet-button>
+            </x-jet-button>
         </div>
     </div>
 
@@ -37,7 +37,7 @@
     <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-<div class="shadow overflow-hidden border-b border-gray-300 rounded-md">
+                <div class="shadow overflow-hidden border-b border-gray-300 rounded-md">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-100">
                             <tr>
@@ -59,7 +59,7 @@
                                     {{ $item->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-<div class="flex item-center justify-end">
+                                    <div class="flex item-center justify-end">
                                         <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer"
                                             wire:click="updateShowModal({{ $item->id }})">
                                             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -67,7 +67,7 @@
                                                     d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
                                                 </path>
                                             </svg>
-</div>
+                                        </div>
                                         <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer"
                                             wire:click="deleteShowModal({{ $item->id }})">
                                             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -75,8 +75,8 @@
                                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
                                                 </path>
                                             </svg>
-</div>
                                         </div>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
@@ -115,7 +115,7 @@
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name"
                     wire:keydown.enter="create" />
                 @endif
-@error('name') <span class="text-red-500">{{ $message }}</span> @enderror
+                @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
         </x-slot>
 

@@ -79,45 +79,81 @@
                 </div>
             </div>
 
-            <div class="flex flex-col">
-                <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="py-1 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                        <div class="shadow">
+</div>
+
+<div class="md:grid md:grid-cols-1 md:gap-6">
+    <div class="px-4 py-5 bg-white sm:p-6">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-md">
                             <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-500">
+<thead class="bg-gray-600">
                                     <tr>
                                         <th scope="col"
-                                            class="px-6 py-2 text-left text-xs font-bold text-white uppercase">
-                                            ref #
-                                        </th>
-
-                                        <th scope="col"
-                                            class="px-6 py-2 text-left text-xs font-bold text-white uppercase">
+class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                                             pcode
                                         </th>
                                         <th scope="col"
-                                            class="px-6 py-2 text-left text-xs font-bold text-white uppercase">
+class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                                             description
                                         </th>
                                         <th scope="col"
-                                            class="px-6 py-2 text-left text-xs font-bold text-white uppercase">
+class="py-2 text-center text-xs font-medium text-white uppercase tracking-wider">
                                             qty
                                         </th>
-                                        <th scope="col"
-                                            class="px-6 py-2 text-left text-xs font-bold text-white uppercase">
-                                            stock in date
-                                        </th>
-                                        <th scope="col"
-                                            class="px-6 py-2 text-left text-xs font-bold text-white uppercase">
-                                            stock in by
-                                        </th>
-                                        <th scope="col"
-                                            class="px-6 py-2 text-left text-xs font-bold text-white uppercase">
-                                            vendor
+<th scope="col" class="px-3 relative py-2">
+    <span class="sr-only"></span>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
+@if (!empty($items))
+@foreach ($this->items as $key => $item)
+<tr>
+    <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
+        {{ $item['pcode'] }}
+    </td>
+    <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
+        {{ $item['product']}}
+    </td>
+    <td class="px-6 py-2 whitespace-nowrap text-center text-sm text-gray-500 font-medium">
+
+        <div class="flex item-center justify-center">
+
+            <svg class="h-5 w-5 mr-1 mt-2 text-gray-500 cursor-pointer" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+
+            <input autocomplete="off"
+                class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 text-center focus:ring-opacity-50 text-xs rounded-md shadow-sm w-12"
+                value="{{ $item['qty']}}" type="text">
+
+            <svg class="h-5 w-5 ml-1 mt-2 text-gray-500 cursor-pointer" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+
+        </div>
+
+    </td>
+    <td class="px-6 py-2 whitespace-nowrap text-right text-sm font-medium">
+        <div class="flex item-center justify-end">
+            <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer">
+                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                        clip-rule="evenodd" />
+                </svg>
+
+            </div>
+        </div>
+    </td>
+</tr>
+@endforeach
+@endif
                                 </tbody>
                             </table>
                         </div>
@@ -126,13 +162,12 @@
             </div>
         </div>
 
-
         <x-jet-modal-lg wire:model="modalFormVisible">
             <x-slot name="title">
-<div class="grid grid-cols-2">
+                <div class="grid grid-cols-2">
                     <div class="relative">
                         {{ __('Search Product') }}
-</div>
+                    </div>
                     <div class="relative flex justify-end">
                         <div class="md:mt-0">
                             <input type="text"
@@ -153,7 +188,7 @@
                         </div>
                     </div>
 
-                    </div>
+                </div>
             </x-slot>
 
             <x-slot name="content">
@@ -163,14 +198,14 @@
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                 <table class="min-w-full divide-y divide-gray-200">
-<thead class="bg-gray-600">
+                                    <thead class="bg-gray-600">
                                         <tr>
                                             <th scope="col"
-class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                                class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                                                 pcode
                                             </th>
                                             <th scope="col"
-class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                                class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                                                 description
                                             </th>
                                             <th scope="col" class="relative px-6 py-3">
@@ -179,10 +214,10 @@ class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wid
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
-@if ($products->count())
+                                        @if ($products->count())
                                         @foreach ($products as $item)
                                         <tr>
-<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {{ $item->pcode }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
@@ -190,7 +225,8 @@ class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wid
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <div class="flex item-center justify-end">
-                                                    <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer">
+<div wire:click="getSelectedItems({{ $item->id }})"
+    class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer">
                                                         <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                             <path fill-rule="evenodd"
                                                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -198,9 +234,9 @@ class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wid
                                                         </svg>
                                                     </div>
                                                 </div>
-</td>
+                                            </td>
                                         </tr>
-@endforeach
+                                        @endforeach
                                         @else
                                         <tr>
                                             <td class="px-6 py-4 text-sm whitespace-no-wrap" colspan="4">No results
@@ -213,16 +249,17 @@ class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wid
                         </div>
                     </div>
                 </div>
-<div class="mt-5">
+                <div class="mt-5">
                     {{ $products->links() }}
                 </div>
             </x-slot>
 
             <x-slot name="footer">
                 <x-jet-secondary-button wire:click="$toggle('modalFormVisible')" wire:loading.attr="disabled">
-{{ __('Cancel') }}
+                    {{ __('Cancel') }}
                 </x-jet-secondary-button>
             </x-slot>
         </x-jet-modal-lg>
 
+    </div>
 </div>

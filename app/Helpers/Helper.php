@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Repositories\Contracts\CartRepositoryContract;
+
 class Helper
 {
     public static function IDGenerator($model, $trow, $length = 5, $prefix)
@@ -28,6 +30,12 @@ class Helper
 
         return $prefix.''.$zeroes.$last_number;
     }
+
+    public static function cart()
+    {
+        return app(CartRepositoryContract::class);
+    }
+
 }
 
 

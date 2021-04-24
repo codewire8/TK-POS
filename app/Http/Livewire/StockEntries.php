@@ -17,8 +17,7 @@ class  StockEntries extends Component
     public $modalConfirmDeleteVisible;
     public $modelId;
 
-
-    // public vars
+    public $items = [];
 
     public $refno;
     public $stock_in_by;
@@ -28,8 +27,10 @@ class  StockEntries extends Component
     public $contact_person;
     public $address;
 
+    // Cart items
+    public $pcode;
     public $product;
-    public $qty;
+    public $qty = 1;
 
     // search var
 
@@ -114,7 +115,7 @@ class  StockEntries extends Component
     }
 
     /**
-     * Display List of products
+     * Show List of products
      *
      * @return void
      */
@@ -123,6 +124,26 @@ class  StockEntries extends Component
         $this->modalFormVisible = true;
     }
 
+    public function getSelectedItems($id): void
+    {
+        $this->modelId = $id;
+
+        $data = Flavor::with('size')->find($this->modelId);
+        $this->pcode = $data->pcode;
+        $this->product = $data->name . ' (' . $data->size->name . ') ';
+        $this->qty = 0;
+
+        $this->addDataRow();
+    }
+
+    public function addDataRow()
+    {
+        array_push($this->items, [
+            'pcode' => $this->pcode,
+            'product' => $this->product,
+            'qty' => 1
+        ]);
+    }
 
     /**
      * Genereate Reference No. for eacht entry
