@@ -121,10 +121,11 @@ class  StockEntries extends Component
      */
     public function showProductListModal()
     {
+        $this->reset();
         $this->modalFormVisible = true;
     }
 
-    public function getSelectedItems($id): void
+    public function addSelectedItem($id): void
     {
         $this->modelId = $id;
 
@@ -133,16 +134,23 @@ class  StockEntries extends Component
         $this->product = $data->name . ' (' . $data->size->name . ') ';
         $this->qty = 0;
 
-        $this->addDataRow();
+        $this->itemRow();
     }
 
-    public function addDataRow()
+    public function itemRow()
     {
         array_push($this->items, [
             'pcode' => $this->pcode,
             'product' => $this->product,
             'qty' => 1
         ]);
+    }
+
+    public function removeSelectedItem($index)
+    {
+        unset($this->items[$index]);
+
+        $this->items = array_values($this->items);
     }
 
     /**
