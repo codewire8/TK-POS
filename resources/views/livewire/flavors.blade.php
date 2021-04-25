@@ -22,8 +22,7 @@ if (event.keyCode === 113) {
                 <div wire:loading="search" class="spinner top-0 right-1/2 mr-4 mt-4"></div>
             </div>
         </div>
-        <div class="relative pb-4">
-
+<div class="relative pb-4">
             <div class="text-right">
                 <x-jet-button wire:click="createShowModal">
                     {{ __('New Product') }}
@@ -39,26 +38,26 @@ if (event.keyCode === 113) {
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-100">
+<thead class="bg-gray-600">
                             <tr>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
                                     pcode
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
                                     description
                                 </th>
-<th scope="col" class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+<th scope="col" class="px-6 py-3 text-center text-xs font-bold text-white uppercase tracking-wider">
                                     brand
                                 </th>
-<th scope="col" class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+<th scope="col" class="px-6 py-3 text-center text-xs font-bold text-white uppercase tracking-wider">
                                     category
                                 </th>
-<th scope="col" class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+<th scope="col" class="px-6 py-3 text-center text-xs font-bold text-white uppercase tracking-wider">
                                     price
                                 </th>
-<th scope="col" class="py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
+<th scope="col" class="py-3 text-center text-xs font-bold text-white uppercase tracking-wider">
                                     re-order level
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
@@ -70,26 +69,26 @@ if (event.keyCode === 113) {
                             @if ($data->count())
                             @foreach ($data as $item)
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+<td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
                                     {{ $item->pcode }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+<td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
                                     {{ $item->name . ' ( ' . $item->size->name . ' )' }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium text-center">
+<td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium text-center">
                                     {{ $item->brand->name }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium text-center">
+<td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium text-center">
                                     {{ $item->category->name }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium text-center">
+<td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium text-center">
                                     {{ number_format($item->price, 2) }}
                                 </td>
-                                <td class="py-4 whitespace-nowrap text-sm text-gray-500 font-medium text-center">
+<td class="py-2 whitespace-nowrap text-sm text-gray-500 font-medium text-center">
                                     {{ $item->reorder }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-<div class="flex item-center justify-end">
+<td class="px-6 py-2 whitespace-nowrap text-right text-sm font-medium">
+                                    <div class="flex item-center justify-end">
                                         <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer"
                                             wire:click="updateShowModal({{ $item->id }})">
                                             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -97,7 +96,7 @@ if (event.keyCode === 113) {
                                                     d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
                                                 </path>
                                             </svg>
-</div>
+                                        </div>
                                         <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer"
                                             wire:click="deleteShowModal({{ $item->id }})">
                                             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -105,8 +104,8 @@ if (event.keyCode === 113) {
                                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
                                                 </path>
                                             </svg>
-</div>
                                         </div>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
@@ -139,27 +138,27 @@ if (event.keyCode === 113) {
                 <x-jet-label for="bardcode" value="{{ __('Bar Code') }}" />
                 <x-jet-input id="bardcode" class="block mt-1 w-full" type="text" wire:model="barcode" />
             </div>
-<div class="mt-4">
+            <div class="mt-4">
                 <x-jet-label for="name" value="{{ __('Product') }}" />
-<x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name" />
+                <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name" />
                 @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
-<x-jet-label for="brand" value="{{ __('Brand') }}" />
+                <x-jet-label for="brand" value="{{ __('Brand') }}" />
                 <select id="brand" wire:model="brand"
                     class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
-<option value="">---</option>
+                    <option value="">---</option>
                     @foreach ($brands as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
-</select>
+                </select>
                 @error('brand') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
                 <x-jet-label for="category" value="{{ __('Category') }}" />
                 <select id="category" wire:model="category"
                     class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
-<option value="">---</option>
+                    <option value="">---</option>
                     @foreach ($categories as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
@@ -170,7 +169,7 @@ if (event.keyCode === 113) {
                 <x-jet-label for="size  " value="{{ __('Size') }}" />
                 <select id="size" wire:model="size"
                     class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
-<option value="">---</option>
+                    <option value="">---</option>
                     @foreach ($sizes as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
@@ -220,7 +219,7 @@ if (event.keyCode === 113) {
     <!-- Delete User Confirmation Modal -->
     <x-jet-dialog-modal wire:model="modalConfirmDeleteVisible">
         <x-slot name="title">
-{{ __('Product') }}
+            {{ __('Product') }}
         </x-slot>
 
         <x-slot name="content">

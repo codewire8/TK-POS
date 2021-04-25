@@ -2,11 +2,11 @@
 
     {{-- Create button --}}
 
-    <div class="grid grid-cols-2">
-        <div class="py-5 relative">
-            <div class="relative mt-3 md:mt-0">
+ <div class="grid grid-cols-2">
+        <div class="relative pb-4">
+            <div class="relative md:mt-0">
                 <input type="text"
-class="bg-white rounded-md w-1/2 px-4 pl-8 py-2 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray-300 focus:border-indigo-300"
+                    class="bg-white rounded-md w-1/2 px-4 pl-8 py-1 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray-300 focus:border-indigo-300"
                     wire:model.debounce.500ms="search" x-ref="search" @keydown.window="
 if (event.keyCode === 113) {
                                                                     event.preventDefault();
@@ -14,19 +14,20 @@ if (event.keyCode === 113) {
                                                                 }
 " placeholder="Search (Press '[F2]' to focus)">
                 <div class="absolute top-0">
-<svg class="fill-current w-4 text-gray-500 mt-3 ml-3" viewBox="0 0 24 24">
+                    <svg class="fill-current w-4 text-gray-500 mt-2 ml-2" viewBox="0 0 24 24">
                         <path class="heroicon-ui"
                             d="M16.32 14.9l5.39 5.4a1 1 0 01-1.42 1.4l-5.38-5.38a8 8 0 111.41-1.41zM10 16a6 6 0 100-12 6 6 0 000 12z" />
                     </svg>
                 </div>
-<div wire:loading="search" class="spinner top-0 right-1/2 mr-4 mt-5"></div>
+                <div wire:loading="search" class="spinner top-0 right-1/2 mr-4 mt-4"></div>
             </div>
-
         </div>
-        <div class=" py-5 text-right">
-            <x-jet-button wire:click="createShowModal">
-                {{ __('New Product') }}
-            </x-jet-button>
+        <div class="relative pb-4">
+            <div class="text-right">
+                <x-jet-button wire:click="createShowModal">
+                    {{ __('New Product') }}
+                </x-jet-button>
+            </div>
         </div>
     </div>
 
@@ -38,10 +39,10 @@ if (event.keyCode === 113) {
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-100">
+                        <thead class="bg-gray-600">
                             <tr>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                    class="px-6 py-2 text-left text-xs font-bold text-white uppercase tracking-wider">
                                     category
                                 </th>
 
