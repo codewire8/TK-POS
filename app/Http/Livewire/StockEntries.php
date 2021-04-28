@@ -55,7 +55,7 @@ class  StockEntries extends Component
         ];
     }
 
-        /**
+    /**
      * Custom Error  Validataion
      *
      * @return void
@@ -72,7 +72,7 @@ class  StockEntries extends Component
         ];
     }
 
-     /**
+    /**
      * Model data of this component.
      *
      * @return void
@@ -107,11 +107,16 @@ class  StockEntries extends Component
         ]);
     }
 
+    /**
+     * List of products
+     *
+     * @return void
+     */
     public function products()
     {
         return Flavor::where('pcode', 'like', '%' . $this->query . '%')
             ->orWhere('name', 'like', '%' . $this->query . '%')
-            ->with('size')->paginate(10);
+            ->with('size')->paginate(15);
     }
 
     /**
@@ -121,10 +126,15 @@ class  StockEntries extends Component
      */
     public function showProductListModal()
     {
-        $this->reset();
         $this->modalFormVisible = true;
     }
 
+    /**
+     * Add selected item
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function addSelectedItem($id): void
     {
         $this->modelId = $id;
@@ -132,26 +142,49 @@ class  StockEntries extends Component
         $data = Flavor::with('size')->find($this->modelId);
         $this->pcode = $data->pcode;
         $this->product = $data->name . ' (' . $data->size->name . ') ';
-        $this->qty = 0;
 
         $this->itemRow();
     }
 
+    /**
+     * Selected item row
+     *
+     * @return void
+     */
     public function itemRow()
     {
-        array_push($this->items, [
-            'pcode' => $this->pcode,
-            'product' => $this->product,
-            'qty' => 1
-        ]);
+        if (array_search($this->pcode, array_column($this->items, 'pcode')) !== false) {
+            foreach ($this->items as &$item) {
+                //dd($item['pcode']);
+                dd($this->pcode);
+                // if ($item['pcode'] === $this->pcode) {
+
+                //     //$item['qty'] = $this->qty++;
+                // }
+
+            }
+        } else {
+            array_push($this->items, [
+                'pcode' => $this->pcode,
+                'product' => $this->product,
+                'qty' => $this->qty
+            ]);
+        }
     }
 
+    /**
+     * Remove selected item
+     *
+     * @param  mixed $index
+     * @return void
+     */
     public function removeSelectedItem($index)
     {
         unset($this->items[$index]);
 
         $this->items = array_values($this->items);
     }
+
 
     /**
      * Genereate Reference No. for eacht entry
@@ -160,10 +193,15 @@ class  StockEntries extends Component
      */
     public function generateReferenceNo()
     {
-       $this->refno = Helper::IDGenerator(new StockEntry, 'refno', 6, Carbon::now()->format('Ymd'));
+        $this->refno = Helper::IDGenerator(new StockEntry, 'refno', 6, Carbon::now()->format('Ymd'));
     }
 
 
+    /**
+     * Get vendor details
+     *
+     * @return void
+     */
     public function getVendorDetails()
     {
         if ($this->vendorId !== '') {
@@ -176,6 +214,11 @@ class  StockEntries extends Component
         }
     }
 
+    /**
+     * Render data
+     *
+     * @return void
+     */
     public function render()
     {
         return view('livewire.stock-entries', [
@@ -183,6 +226,4 @@ class  StockEntries extends Component
             'products' => $this->products()
         ]);
     }
-
-
 }

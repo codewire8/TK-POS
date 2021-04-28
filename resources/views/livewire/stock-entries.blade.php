@@ -80,7 +80,7 @@
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div
-class="shadow border-b rounded-md border-gray-200 h-96 overflow-auto scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 scrollbar-thumb-rounded-full">
+                            class="shadow border-b rounded-md border-gray-200 h-96 overflow-auto scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 scrollbar-thumb-rounded-full">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-600">
                                     <tr>
@@ -105,39 +105,27 @@ class="shadow border-b rounded-md border-gray-200 h-96 overflow-auto scrollbar s
                                     @if (!empty($items))
                                     @foreach ($this->items as $key => $item)
                                     <tr>
-                                        <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-500 font-medium">
+<td class="px-6 py-0 whitespace-nowrap text-sm text-gray-500 font-medium">
                                             {{ $item['pcode'] }}
                                         </td>
-                                        <td class="px-6 py-1 whitespace-nowrap text-sm text-gray-500 font-medium">
+<td class="px-6 py-0 whitespace-nowrap text-sm text-gray-500 font-medium">
                                             {{ $item['product']}}
                                         </td>
-<td class="px-6 py-1 whitespace-nowrap text-center text-sm text-gray-500 font-medium">
+<td class="px-6 py-0 whitespace-nowrap text-center text-sm text-gray-500 font-medium">
 
                                             <div class="flex item-center justify-center">
 
-<svg class="h-5 w-5 mr-1 mt-2 text-gray-500 cursor-pointer transform rotate-180" viewBox="0 0 20 20"
-                                                    fill="currentColor">
-                                                    <path fill-rule="evenodd"
-                                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
 
-                                                <input autocomplete="off"
-                                                    class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 text-center focus:ring-opacity-50 text-xs rounded-md shadow-sm w-12"
+<input type="number" min="1"
+                                                    class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 text-center focus:ring-opacity-50 text-xs rounded-md shadow-sm w-20"
                                                     value="{{ $item['qty']}}" type="text">
-
-<svg class="h-5 w-5 ml-1 mt-2 text-gray-500 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd"
-                                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
 
                                             </div>
 
                                         </td>
                                         <td class="px-6 py-2 whitespace-nowrap text-right text-sm font-medium">
                                             <div class="flex item-center justify-end">
-<div wire:click="removeSelectedItem({{ $key }})"
+                                                <div wire:click="removeSelectedItem({{ $key }})"
                                                     class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer">
                                                     <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                         <path fill-rule="evenodd"
@@ -217,15 +205,15 @@ class="shadow border-b rounded-md border-gray-200 h-96 overflow-auto scrollbar s
                                         @if ($products->count())
                                         @foreach ($products as $item)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+<td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
                                                 {{ $item->pcode }}
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+<td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
                                                 {{ $item->name . ' ( ' . $item->size->name . ' )' }}
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<td class="px-6 py-2 whitespace-nowrap text-right text-sm font-medium">
                                                 <div class="flex item-center justify-end">
-<div wire:click="addSelectedItem({{ $item->id }})"
+                                                    <div wire:click="addSelectedItem({{ $item->id }})"
                                                         class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer">
                                                         <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                             <path fill-rule="evenodd"
