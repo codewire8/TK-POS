@@ -153,16 +153,8 @@ class  StockEntries extends Component
      */
     public function itemRow()
     {
-        if (array_search($this->pcode, array_column($this->items, 'pcode')) !== false) {
-            foreach ($this->items as &$item) {
-                //dd($item['pcode']);
-                dd($this->pcode);
-                // if ($item['pcode'] === $this->pcode) {
-
-                //     //$item['qty'] = $this->qty++;
-                // }
-
-            }
+        if (($key = array_search($this->pcode, array_column($this->items, 'pcode'))) !== false) {
+            $this->items[$key]['qty'] += 1;
         } else {
             array_push($this->items, [
                 'pcode' => $this->pcode,
