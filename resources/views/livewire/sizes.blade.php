@@ -3,7 +3,7 @@
     {{-- Create button --}}
 
     <div class="grid grid-cols-2">
-<div class="pb-4 relative">
+        <div class="pb-4 relative">
             <div class="relative mt-3 md:mt-0">
                 <input type="text"
                     class="bg-white rounded-md w-1/2 px-4 pl-8 py-1 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray-300 focus:border-indigo-300"
@@ -24,7 +24,7 @@
             </div>
 
         </div>
-<div class="pb-4 text-right">
+        <div class="pb-4 text-right">
             <x-jet-button wire:click="createShowModal">
                 {{ __('New Size') }}
             </x-jet-button>
@@ -39,10 +39,10 @@
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="shadow overflow-hidden border-b border-gray-300 rounded-md">
                     <table class="min-w-full divide-y divide-gray-200">
-<thead class="bg-gray-600">
+                        <thead class="bg-gray-600">
                             <tr>
                                 <th scope="col"
-class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
                                     size
                                 </th>
 
@@ -55,10 +55,10 @@ class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider
                             @if ($data->count())
                             @foreach ($data as $item)
                             <tr>
-<td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
+                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
                                     {{ $item->name }}
                                 </td>
-<td class="px-6 py-2 whitespace-nowrap text-right text-sm font-medium">
+                                <td class="px-6 py-2 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex item-center justify-end">
                                         <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer"
                                             wire:click="updateShowModal({{ $item->id }})">
