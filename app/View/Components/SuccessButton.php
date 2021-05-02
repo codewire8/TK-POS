@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class DeleteActionButton extends Component
+class SuccessButton extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class DeleteActionButton extends Component
      */
     public function render()
     {
-        return view('components.delete-action-button');
+        return view('components.success-button');
     }
 }

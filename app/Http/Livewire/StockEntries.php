@@ -15,6 +15,7 @@ class  StockEntries extends Component
     use WithPagination;
     public $modalFormVisible;
     public $modalConfirmDeleteVisible;
+    public $modalErrorProduct;
 
     /**Data model */
 
@@ -67,7 +68,7 @@ class  StockEntries extends Component
             'stock_in_date' => 'required|date',
             'vendorId' => 'required',
             'productId' => 'required',
-            'qty' => 'required|numeric',
+            'qty' => 'required|numeric|min:1',
         ];
     }
 
@@ -79,40 +80,21 @@ class  StockEntries extends Component
     public function messages()
     {
         return [
-            'refno.required' => 'The reference no. field is required!',
-            'stock_in_by.required' => 'The stock in by field is required!',
-            'stock_in_date.required' => 'The stock in date field is required!',
-            'vendorId.required' => 'The vendor field is required!',
+            'refno.required' => '*Reference No. is required.',
+            'stock_in_by.required' => '*Stock In By is required.',
+            'stock_in_date.required' => '*Stock In Date is required.',
+            'vendorId.required' => '*Vendor is required.',
+            'productId.required' => '*Product(s) are required. Click "BROWSE PRODUCTS" to add an item(s).'
         ];
     }
 
-    /**
-     * Model data of this component.
-     *
-     * @return void
-     */
-    public function modelData()
-    {
-        $items = $this->items;
-
-        foreach ($items as $item) {
-            StockEntry::create([
-                'refno' => $this->refno,
-                'stock_in_by' => $this->stock_in_by,
-                'stock_in_date' => $this->stock_in_date,
-                'vendor_id' => $this->vendorId,
-                'flavor_id' => $item->productId,
-                'qty' => $item->qty
-            ]);
-        }
-    }
 
     /**
      * Create function for this component.
      *
      * @return void
      */
-    public function create()
+    public function create() : void
     {
         $this->validate();
 
@@ -155,7 +137,7 @@ class  StockEntries extends Component
      *
      * @return void
      */
-    public function showProductListModal()
+    public function showProductListModal() : void
     {
         $this->modalFormVisible = true;
     }
@@ -183,7 +165,7 @@ class  StockEntries extends Component
      *
      * @return void
      */
-    public function itemRow()
+    public function itemRow() :void
     {
         if (($key = array_search($this->productCode, array_column($this->items, 'productCode'))) !== false) {
             $this->items[$key]['qty'] += 1;
@@ -222,12 +204,24 @@ class  StockEntries extends Component
     }
 
     /**
+     * Edit quantity of product
+     *
+     * @return void
+     */
+    public function editQty($id) : void
+    {
+        if (($key = array_search($id, array_column($this->items, 'pId'))) !== false) {
+            $this->items[$key]['qty'] =  $this->items[$key]['qty'];
+        }
+    }
+
+    /**
      * Remove selected item
      *
      * @param  mixed $index
      * @return void
      */
-    public function removeSelectedItem($index)
+    public function removeSelectedItem($index) : void
     {
         unset($this->items[$index]);
 
@@ -240,7 +234,7 @@ class  StockEntries extends Component
      *
      * @return void
      */
-    public function generateReferenceNo()
+    public function generateReferenceNo() : void
     {
         $this->refno = Helper::IDGenerator(new StockEntry, 'refno', 6, Carbon::now()->format('Ymd'));
     }
@@ -251,7 +245,7 @@ class  StockEntries extends Component
      *
      * @return void
      */
-    public function getVendorDetails()
+    public function getVendorDetails() : void
     {
         if ($this->vendorId !== '') {
             $data = Vendor::find($this->vendorId);

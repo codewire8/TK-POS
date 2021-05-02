@@ -5,11 +5,11 @@ $id = $id ?? md5($attributes->wire('model'));
 
 $maxWidth = [
     'sm' => 'sm:max-w-sm',
-'md' => 'md:w-1/2',
+    'md' => 'md:w-1/2',
     'lg' => 'sm:max-w-lg',
     'xl' => 'sm:max-w-xl',
     '2xl' => 'sm:max-w-2xl',
-'wfull' => 'md:w-5/6'
+    'wfull' => 'md:w-5/6'
 ][$maxWidth ?? '2xl'];
 @endphp
 
