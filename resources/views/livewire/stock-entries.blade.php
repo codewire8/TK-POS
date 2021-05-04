@@ -136,7 +136,6 @@
 
                                                 <input
                                                     type="text"
-                                                    wire:change.debounce.300ms="editQty({{ $item['pId'] }})"
                                                     wire:model.defer="items.{{ $key }}.qty"
                                                     class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 text-center focus:ring-opacity-50 text-xs rounded-md shadow-sm w-16"
                                                     value="{{ $item['qty']}}" type="text">

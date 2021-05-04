@@ -12,7 +12,9 @@ class StockEntry extends Model
         'stock_in_by',
         'stock_in_date',
         'vendor_id',
+        'size_id',
         'flavor_id',
+        'description',
         'qty',
     ];
 
@@ -22,10 +24,19 @@ class StockEntry extends Model
 
     use HasFactory;
 
-    public function stockEntry()
+    public function vendor()
     {
-        $this->hasOne(Vendor::class);
+        return $this->belongsTo(Vendor::class);
     }
 
+    public function flavor()
+    {
+        return $this->belongsTo(Flavor::class);
+    }
+
+    public function size()
+    {
+        return $this->belongsTo(Size::class);
+    }
 
 }

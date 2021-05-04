@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddQtyToFlavors extends Migration
+class AddDescriptionToStockEntries extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddQtyToFlavors extends Migration
      */
     public function up()
     {
-        Schema::table('flavors', function (Blueprint $table) {
-             $table->string('qty')->default(0)->after('reorder');
+        Schema::table('stock_entries', function (Blueprint $table) {
+            $table->string('description')->nullable()->after('flavor_id');
         });
     }
 
@@ -25,7 +25,7 @@ class AddQtyToFlavors extends Migration
      */
     public function down()
     {
-        Schema::table('flavors', function (Blueprint $table) {
+        Schema::table('stock_entries', function (Blueprint $table) {
             //
         });
     }

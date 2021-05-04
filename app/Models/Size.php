@@ -17,4 +17,9 @@ class Size extends Model
     {
         return $this->hasMany(Flavor::class);
     }
+
+    public function stockEntries()
+    {
+        return $this->hasMany(StockEntry::class);
+    }
 }

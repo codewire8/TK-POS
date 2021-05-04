@@ -106,6 +106,7 @@ class  StockEntries extends Component
                 'stock_in_by' => $this->stock_in_by,
                 'stock_in_date' => $this->stock_in_date,
                 'vendor_id' => $this->vendorId,
+                'description' => $items[$key]['productDescription'],
                 'flavor_id' => $items[$key]['pId'],
                 'qty' => $items[$key]['qty']
             ]);
@@ -204,18 +205,6 @@ class  StockEntries extends Component
     }
 
     /**
-     * Edit quantity of product
-     *
-     * @return void
-     */
-    public function editQty($id) : void
-    {
-        if (($key = array_search($id, array_column($this->items, 'pId'))) !== false) {
-            $this->items[$key]['qty'] =  $this->items[$key]['qty'];
-        }
-    }
-
-    /**
      * Remove selected item
      *
      * @param  mixed $index
@@ -236,7 +225,7 @@ class  StockEntries extends Component
      */
     public function generateReferenceNo() : void
     {
-        $this->refno = Helper::IDGenerator(new StockEntry, 'refno', 6, Carbon::now()->format('Ymd'));
+        $this->refno = Helper::IDGenerator(new StockEntry, 'refno', 6, Carbon::now()->format('mdy'));
     }
 
 

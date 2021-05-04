@@ -17,8 +17,8 @@ class Vendor extends Model
         'contact_person_email'
     ];
 
-    public function vendor()
+    public function stockEntry()
     {
-       $this->belongsTo(StockEntry::class);
+      return $this->hasMany(StockEntry::class);
     }
 }
