@@ -71,10 +71,10 @@
 
                     <div class="flex pt-4">
                         <x-jet-success-button wire:click="showProductListModal">
-                          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                        </svg>
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                            </svg>
                             <span class="ml-1">{{ __('browse products') }}</span>
                         </x-jet-success-button>
 
@@ -125,8 +125,7 @@
 
                                             <div class="flex item-center justify-center">
 
-                                                <svg
-                                                    wire:click.prevent="decrement({{ $item['pId'] }})"
+                                                <svg wire:click.prevent="decrement({{ $item['pId'] }})"
                                                     class="h-5 w-5 mr-1 mt-2 cursor-pointer transform rotate-180 fill-current text-green-400"
                                                     viewBox="0 0 20 20" fill="currentColor">
                                                     <path fill-rule="evenodd"
@@ -134,19 +133,14 @@
                                                         clip-rule="evenodd" />
                                                 </svg>
 
-                                                <input
-                                                    type="text"
-                                                    wire:model.defer="items.{{ $key }}.qty"
+                                                <input type="text" wire:model.defer="items.{{ $key }}.qty"
                                                     class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 text-center focus:ring-opacity-50 text-xs rounded-md shadow-sm w-16"
                                                     value="{{ $item['qty']}}" type="text">
 
-                                                <svg
-                                                    wire:click.prevent="increment({{ $item['pId'] }})"
+                                                <svg wire:click.prevent="increment({{ $item['pId'] }})"
                                                     class="h-5 w-5 ml-1 mt-2 cursor-pointer fill-current text-green-400"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor">
-                                                    <path
-                                                        fill-rule="evenodd"
+                                                    viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd"
                                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
                                                         clip-rule="evenodd" />
                                                 </svg>

@@ -33,7 +33,8 @@ class UserPermission extends Model
              'brand',
              'vendor',
              'stock-entry',
-             'stock-in-history'
+             'stock-in-history',
+             'stock-adjustment'
         ];
     }
 

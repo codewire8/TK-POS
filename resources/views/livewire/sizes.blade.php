@@ -7,12 +7,8 @@
             <div class="relative mt-3 md:mt-0">
                 <input type="text"
                     class="bg-white rounded-md w-1/2 px-4 pl-8 py-1 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray-300 focus:border-indigo-300"
-                    wire:model.debounce.500ms="query" x-ref="query" @keydown.window="
-                                                                                                    if (event.keyCode === 113) {
-                                                                                                                                                                        event.preventDefault();
-                                                                                                                                                                        $refs.query.focus();
-                                                                                                                                                                    }
-                                                                                                    "
+                    wire:model.debounce.500ms="query" x-ref="query"
+                    @keydown.window="if (event.keyCode === 113) { event.preventDefault(); $refs.query.focus();"
                     placeholder="Search (Press '[F2]' to focus)">
                 <div class="absolute top-0">
                     <svg class="fill-current w-4 text-gray-500 mt-2 ml-2" viewBox="0 0 24 24">

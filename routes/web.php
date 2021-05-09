@@ -54,6 +54,10 @@ Route::group(['middleware' => [
         return view('admin.stock-in-history');
     })->name('stock-in-history');
 
+    Route::get('/stock-adjustment', function () {
+        return view('admin.stock-adjustment');
+    })->name('stock-adjustment');
+
     Route::get('/category', function () {
         return view('admin.category');
     })->name('category');

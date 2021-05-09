@@ -43,4 +43,8 @@ class Flavor extends Model
       return $this->belongsTo(StockEntry::class);
     }
 
+    public function stockAdjustment()
+    {
+        return $this->belongsTo(StockAdjustment::class);
+    }
 }
