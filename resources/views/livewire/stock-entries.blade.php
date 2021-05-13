@@ -70,13 +70,13 @@
                     </div>
 
                     <div class="flex pt-4">
-                        <x-jet-success-button wire:click="showProductListModal">
+                        <x-jet-secondary-button class="bg-gray-100" wire:click="showProductListModal">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                             </svg>
-                            <span class="ml-1">{{ __('browse products') }}</span>
-                        </x-jet-success-button>
+                            <span class="ml-1">{{ __('browse product(s)') }}</span>
+                        </x-jet-secondary-button>
 
                         @error('productId')<small class="text-red-500 pt-2 mx-2">{{ $message }}</small> @enderror
                     </div>
@@ -173,9 +173,9 @@
         </div>
 
         <div class="flex my-6">
-            <x-jet-button class="ml-5" wire:click.prevent="create">
+            <x-jet-success-button class="ml-5" wire:click.prevent="create">
                 {{ __('Save') }}
-            </x-jet-button>
+            </x-jet-success-button>
         </div>
 
 

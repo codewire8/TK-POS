@@ -29,31 +29,31 @@
                         <thead class="bg-gray-600">
                             <tr>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                                    class="px-4 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
                                     pcode
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                                    class="px-4 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
                                     barcode
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                                    class="mx-auto py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
                                     description
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                                    class="px-4 py-3 text-center text-xs font-bold text-white uppercase tracking-wider">
                                     brand
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                                    class="px-4 py-3 text-center text-xs font-bold text-white uppercase tracking-wider">
                                     category
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                                    class="px-4 py-3 text-center text-xs font-bold text-white uppercase tracking-wider">
                                     price
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                                    class="px-4 py-3 text-center text-xs font-bold text-white uppercase tracking-wider">
                                     stock on hand
                                 </th>
                                 <th scope="col" class="relative">
@@ -65,39 +65,36 @@
                             @if ($data->count())
                             @foreach ($data as $item)
                             <tr>
-                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
                                     {{ $item->pcode }}
                                 </td>
-                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
                                     {{ $item->barcode }}
                                 </td>
-                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
+                                <td class="mx-auto py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
                                     {{ $item->name . ' ( ' . $item->size->name . ' )' }}
                                 </td>
-                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-center text-gray-500 font-medium">
                                     {{ $item->brand->name }}
                                 </td>
-                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
+                                <td class="px-4 py-2 whitespace-nowrap text-center text-sm text-gray-500 font-medium">
                                     {{ $item->category->name }}
                                 </td>
-                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
+                                <td class="px-4 py-2 whitespace-nowrap text-center text-sm text-gray-500 font-medium">
                                     {{ $item->price }}
                                 </td>
-                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
+                                <td class="px-4 py-2 whitespace-nowrap text-center text-sm text-gray-500 font-medium">
                                     {{ $item->qty }}
                                 </td>
-                                <td class="px-6 py-2 whitespace-nowrap text-right text-sm font-medium">
-                                    <div class="flex item-center justify-end">
+                                <td class="mx-2 py-2 whitespace-nowrap text-center text-sm font-medium">
+                                    <div class="flex item-center">
                                         <div
                                             class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer">
-
-                                           <svg  class="h-4 w-4 transform rotate-90" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-
-                                                                                 </div>
+                                            <svg  class="h-4 w-4 transform rotate-90" viewBox="0 0 20 20" fill="currentColor">
+                                                <path
+                                                    d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                                            </svg>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

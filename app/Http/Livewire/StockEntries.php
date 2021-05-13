@@ -29,7 +29,7 @@ class  StockEntries extends Component
      *
         Temporary variables
      *
-    **/
+     **/
 
     // Vendor details
 
@@ -49,7 +49,7 @@ class  StockEntries extends Component
 
     public $query;
 
-    public function mount()
+    public function hydrate()
     {
         $this->stock_in_date = Carbon::now()->format('Y-m-d');
     }
@@ -94,13 +94,14 @@ class  StockEntries extends Component
      *
      * @return void
      */
-    public function create() : void
+    public function create(): void
     {
         $this->validate();
 
         $items = $this->items;
 
         foreach ($items as $key => $item) {
+
             StockEntry::create([
                 'refno' => $this->refno,
                 'stock_in_by' => $this->stock_in_by,
@@ -112,13 +113,18 @@ class  StockEntries extends Component
             ]);
         }
 
-        $this->modalFormVisible = false;
-        $this->reset();
+        foreach ($items as $key => $item) {
+            Flavor::find($items[$key]['pId'])->increment('qty', $items[$key]['qty']);
+        }
+
 
         $this->dispatchBrowserEvent('response', [
             'icon' => 'success',
             'title' => 'Sucessfully saved.'
         ]);
+
+        $this->modalFormVisible = false;
+        $this->reset();
     }
 
     /**
@@ -138,7 +144,7 @@ class  StockEntries extends Component
      *
      * @return void
      */
-    public function showProductListModal() : void
+    public function showProductListModal(): void
     {
         $this->modalFormVisible = true;
     }
@@ -166,7 +172,7 @@ class  StockEntries extends Component
      *
      * @return void
      */
-    public function itemRow() :void
+    public function itemRow(): void
     {
         if (($key = array_search($this->productCode, array_column($this->items, 'productCode'))) !== false) {
             $this->items[$key]['qty'] += 1;
@@ -185,8 +191,8 @@ class  StockEntries extends Component
      *
      * @return void
      */
-    public function decrement($id) : void
-     {
+    public function decrement($id): void
+    {
         if (($key = array_search($id, array_column($this->items, 'pId'))) !== false) {
             $this->items[$key]['qty'] -= 1;
         }
@@ -197,7 +203,7 @@ class  StockEntries extends Component
      *
      * @return void
      */
-    public function increment($id) : void
+    public function increment($id): void
     {
         if (($key = array_search($id, array_column($this->items, 'pId'))) !== false) {
             $this->items[$key]['qty'] += 1;
@@ -210,7 +216,7 @@ class  StockEntries extends Component
      * @param  mixed $index
      * @return void
      */
-    public function removeSelectedItem($index) : void
+    public function removeSelectedItem($index): void
     {
         unset($this->items[$index]);
 
@@ -223,7 +229,7 @@ class  StockEntries extends Component
      *
      * @return void
      */
-    public function generateReferenceNo() : void
+    public function generateReferenceNo(): void
     {
         $this->refno = Helper::IDGenerator(new StockEntry, 'refno', 6, Carbon::now()->format('mdy'));
     }
@@ -234,7 +240,7 @@ class  StockEntries extends Component
      *
      * @return void
      */
-    public function getVendorDetails() : void
+    public function getVendorDetails(): void
     {
         if ($this->vendorId !== '') {
             $data = Vendor::find($this->vendorId);

@@ -20,7 +20,8 @@ class Flavor extends Model
         'category_id',
         'size_id',
         'price',
-        'reorder'
+        'reorder',
+        'qty'
     ];
 
     public function category()
