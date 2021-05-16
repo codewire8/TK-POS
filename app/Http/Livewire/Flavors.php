@@ -20,7 +20,13 @@ class  Flavors extends Component
 
     // model variables
 
-    public $barcode, $name, $brand, $category, $size, $price, $reorder;
+    public $barcode;
+    public $name;
+    public $brand;
+    public $category;
+    public $size;
+    public $price;
+    public $reorder;
 
     // search variables
 

@@ -24,6 +24,7 @@ class JetstreamServiceProvider extends ServiceProvider
         $this->registerComponent('menu-button');
         $this->registerComponent('modal-lg');
         $this->registerComponent('success-button');
+        $this->registerComponent('search-input');
     }
 
     /**
