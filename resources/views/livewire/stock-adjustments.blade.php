@@ -18,7 +18,6 @@
         </div>
     </div>
 
-
     {{-- The data table --}}
 
     <div class="flex flex-col">
@@ -103,7 +102,7 @@
                             @endif
                         </tbody>
                     </table>
-                    <div class="py-3 px-4 bg-gray-50 text-right relative">
+                    <div class="py-3 px-4 bg-gray-50 text-right flex">
                         {{ $data->links() }}
                         </button>
                     </div>

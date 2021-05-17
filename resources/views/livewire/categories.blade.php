@@ -3,26 +3,21 @@
     {{-- Create button --}}
 
     <div class="grid grid-cols-2">
-        <div class="pb-4 relative">
-            <div class="relative mt-3 md:mt-0">
-                <input type="text"
-                    class="bg-white rounded-md w-1/2 px-4 pl-8 py-1 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray-300 focus:border-indigo-300"
-                    wire:model.debounce.500ms="query" x-ref="query" @keydown.window="
-                                                                                                    if (event.keyCode === 113) {
-                                                                                                                                                                        event.preventDefault();
-                                                                                                                                                                        $refs.query.focus();
-                                                                                                                                                                    }
-                                                                                                    "
-                    placeholder="Search (Press '[F2]' to focus)">
-                <div class="absolute top-0">
-                    <svg class="fill-current w-4 text-gray-500 mt-2 ml-2" viewBox="0 0 24 24">
-                        <path class="heroicon-ui"
-                            d="M16.32 14.9l5.39 5.4a1 1 0 01-1.42 1.4l-5.38-5.38a8 8 0 111.41-1.41zM10 16a6 6 0 100-12 6 6 0 000 12z" />
-                    </svg>
-                </div>
-                <div wire:loading="search" class="spinner top-0 right-1/2 mr-4 mt-4"></div>
+      <div class="relative flex justify-start items-center pb-3">
+            <div class="md:mt-0">
+                <x-jet-search-input type="text" x-ref="query" wire:model.defer="query" wire:keydown.enter="read"
+                    @keydown.window="if (event.keyCode === 113) { event.preventDefault(); $refs.query.focus(); }" />
             </div>
-
+            <div class="md:mt-0 mx-3">
+                <x-jet-secondary-button wire:click="read">
+                    <svg wire:loading="read" class="h-4 w-4 mr-1 animate-spin" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    {{ __('filter') }}
+                </x-jet-secondary-button>
+            </div>
         </div>
         <div class="pb-4 text-right">
             <x-jet-button wire:click="createShowModal">

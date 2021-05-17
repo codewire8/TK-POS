@@ -58,7 +58,7 @@ class  Categories extends Component
      *
      * @return void
      */
-    public function loadModel()
+    public function loadModel() : void
     {
         $data = Category::find($this->modelId);
         $this->name = $data->name;
@@ -81,7 +81,7 @@ class  Categories extends Component
      *
      * @return void
      */
-    public function create()
+    public function create() : void
     {
         $this->validate();
         Category::create($this->modelData());
@@ -110,7 +110,7 @@ class  Categories extends Component
      *
      * @return void
      */
-    public function update()
+    public function update() : void
     {
         $this->validate();
         Category::find($this->modelId)->update($this->modelData());
@@ -127,7 +127,7 @@ class  Categories extends Component
      *
      * @return void
      */
-    public function delete()
+    public function delete() : void
     {
         Category::destroy($this->modelId);
         $this->modalConfirmDeleteVisible = false;
@@ -144,7 +144,7 @@ class  Categories extends Component
      *
      * @return void
      */
-    public function createShowModal()
+    public function createShowModal() : void
     {
         $this->resetValidation();
         $this->reset();
@@ -157,7 +157,7 @@ class  Categories extends Component
      * @param  mixed $id
      * @return void
      */
-    public function updateShowModal($id)
+    public function updateShowModal($id) : void
     {
         $this->resetValidation();
         $this->reset();
@@ -172,7 +172,7 @@ class  Categories extends Component
      * @param  mixed $id
      * @return void
      */
-    public function deleteShowModal($id)
+    public function deleteShowModal($id) : void
     {
         $this->modelId = $id;
         $this->modalConfirmDeleteVisible = true;

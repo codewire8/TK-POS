@@ -56,7 +56,7 @@ class  Brands extends Component
      *
      * @return void
      */
-    public function loadModel()
+    public function loadModel() : void
     {
         $data = Brand::find($this->modelId);
         $this->name = $data->name;
@@ -79,7 +79,7 @@ class  Brands extends Component
      *
      * @return void
      */
-    public function create()
+    public function create() : void
     {
         $this->validate();
         Brand::create($this->modelData());
@@ -104,7 +104,7 @@ class  Brands extends Component
      *
      * @return void
      */
-    public function update()
+    public function update() : void
     {
         $this->validate();
         Brand::find($this->modelId)->update($this->modelData());
@@ -121,7 +121,7 @@ class  Brands extends Component
      *
      * @return void
      */
-    public function delete()
+    public function delete() : void
     {
         Brand::destroy($this->modelId);
         $this->modalConfirmDeleteVisible = false;
@@ -138,7 +138,7 @@ class  Brands extends Component
      *
      * @return void
      */
-    public function createShowModal()
+    public function createShowModal() : void
     {
         $this->resetValidation();
         $this->reset();
@@ -151,7 +151,7 @@ class  Brands extends Component
      * @param  mixed $id
      * @return void
      */
-    public function updateShowModal($id)
+    public function updateShowModal($id) : void
     {
         $this->resetValidation();
         $this->reset();
@@ -166,7 +166,7 @@ class  Brands extends Component
      * @param  mixed $id
      * @return void
      */
-    public function deleteShowModal($id)
+    public function deleteShowModal($id) : void
     {
         $this->modelId = $id;
         $this->modalConfirmDeleteVisible = true;
