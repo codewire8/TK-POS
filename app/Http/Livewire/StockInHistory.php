@@ -15,6 +15,8 @@ class StockInHistory extends Component
     public $startDate;
     public $endDate;
 
+    public $pagination = 15;
+
     public function mount()
     {
         $this->startDate = Carbon::now()->format('Y-m-d');
@@ -30,11 +32,11 @@ class StockInHistory extends Component
             return StockEntry::whereBetween('stock_in_date', [$from, $to])
                 ->with('vendor')
                 ->with('flavor')
-                ->paginate(15);
+                ->paginate($this->pagination);
         } else {
             return StockEntry::with('vendor')
                 ->with('flavor')
-                ->paginate(15);
+                ->paginate($this->pagination);
         }
     }
 

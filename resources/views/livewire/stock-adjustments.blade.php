@@ -2,8 +2,7 @@
 
     <div class="relative flex justify-start items-center pb-3">
         <div class="md:mt-0">
-            <x-jet-search-input type="text" x-ref="query" wire:model.defer="query"
-                wire:keydown.enter="read"
+            <x-jet-search-input type="text" x-ref="query" wire:model.defer="query" wire:keydown.enter="read"
                 @keydown.window="if (event.keyCode === 113) { event.preventDefault(); $refs.query.focus(); }" />
         </div>
         <div class="md:mt-0 mx-3">
@@ -87,7 +86,7 @@
                                 </td>
                                 <td class="mx-2 py-2 whitespace-nowrap text-center text-sm font-medium">
                                     <div class="flex item-center">
-                                        <div
+                                        <div wire:click.prevent="getSelectedProduct({{ $item->id }})"
                                             class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer">
                                             <svg class="h-4 w-4 transform rotate-90" viewBox="0 0 20 20"
                                                 fill="currentColor">
@@ -102,9 +101,8 @@
                             @endif
                         </tbody>
                     </table>
-                    <div class="py-3 px-4 bg-gray-50 text-right flex">
+                    <div class="p-3 bg-gray-50 text-right sticky">
                         {{ $data->links() }}
-                        </button>
                     </div>
                 </div>
             </div>
@@ -121,16 +119,17 @@
                             <div class="grid grid-cols-6 gap-6">
                                 <div class="col-span-6 sm:col-span-3">
                                     <x-jet-label for="refno" value="{{ __('REFERENCE NO.') }}" />
-                                    <x-jet-input id="refno" class="block mt-1 w-full bg-gray-100" type="text"
+                                    <x-jet-input id="refno" wire:model.defer="refno" class="block mt-1 w-full bg-gray-100" type="text"
                                         disabled />
                                 </div>
 
                                 <div class="col-span-6 sm:col-span-3">
                                     <x-jet-label for="refno" value="{{ __('ACTION') }}" />
                                     <select id="brand"
+                                        wire:model.defer="action"
                                         class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
                                         <option value="">---</option>
-                                        <option value="ADD IN INVENTORY">ADD IN INVENTORY</option>
+                                        <option value="ADD TO INVENTORY">ADD TO INVENTORY</option>
                                         <option value="REMOVE FROM INVENTOTY">REMOVE FROM INVENTOTY</option>
                                     </select>
                                 </div>
@@ -138,7 +137,7 @@
                             <div class="grid grid-cols-6 gap-6 py-2">
                                 <div class="col-span-6 sm:col-span-3">
                                     <x-jet-label for="pcode" value="{{ __('PRODUCT CODE') }}" />
-                                    <x-jet-input id="pcode" class="block mt-1 w-full bg-gray-100" type="text"
+                                    <x-jet-input id="pcode" wire:model.defer="pcode" class="block mt-1 w-full bg-gray-100" type="text"
                                         disabled />
                                 </div>
 
@@ -150,7 +149,7 @@
                             <div class="grid grid-cols-6 gap-6 py-2">
                                 <div class="col-span-6 sm:col-span-3">
                                     <x-jet-label for="desc" value="{{ __('DESCRIPTION') }}" />
-                                    <x-jet-input id="desc" class="block mt-1 w-full bg-gray-100" type="text" disabled />
+                                    <x-jet-input id="desc" wire:model.defer="desc" class="block mt-1 w-full bg-gray-100" type="text" disabled />
                                 </div>
 
                                 <div class="col-span-6 sm:col-span-3">
