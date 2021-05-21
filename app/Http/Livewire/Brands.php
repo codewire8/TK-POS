@@ -34,7 +34,8 @@ class  Brands extends Component
             'name' =>  [
                     'required',
                     'max:50',
-                    Rule::unique('brands', 'name')->ignore($this->modelId),
+                    Rule::unique('brands', 'name')
+                        ->ignore($this->modelId),
                 ]
         ];
     }
@@ -114,6 +115,7 @@ class  Brands extends Component
             'icon' => 'success',
             'title' => 'Successfully updated.'
         ]);
+        $this->reset();
     }
 
     /**
@@ -154,7 +156,6 @@ class  Brands extends Component
     public function updateShowModal($id) : void
     {
         $this->resetValidation();
-        $this->reset();
         $this->modalFormVisible = true;
         $this->modelId = $id;
         $this->loadModel();
