@@ -20,7 +20,16 @@ class  Vendors extends Component
 
     // search variables
 
-    public $search;
+    public $query;
+
+    /**
+     * Return to page one when searching
+     */
+    
+    public function updatedQuery()
+    {
+        $this->gotoPage(1);
+    }
 
     /**
      * Form Validation.
@@ -34,12 +43,12 @@ class  Vendors extends Component
             'name' => [
                 'required',
                 'max:255',
-                 Rule::unique('vendors', 'name')->ignore($this->modelId)
+                Rule::unique('vendors', 'name')->ignore($this->modelId)
             ]
         ];
     }
 
-        /**
+    /**
      * Custom Error  Validataion
      *
      * @return void
@@ -56,7 +65,7 @@ class  Vendors extends Component
      *
      * @return void
      */
-    public function loadModel()
+    public function loadModel() : void
     {
         $data = Vendor::find($this->modelId);
         $this->name = $data->name;
@@ -66,7 +75,7 @@ class  Vendors extends Component
         $this->contact_person_email = $data->contact_person_email;
     }
 
-     /**
+    /**
      * Model data of this component.
      *
      * @return void
@@ -87,17 +96,18 @@ class  Vendors extends Component
      *
      * @return void
      */
-    public function create()
+    public function create(): void
     {
         $this->validate();
         Vendor::create($this->modelData());
         $this->modalFormVisible = false;
-        $this->reset();
 
         $this->dispatchBrowserEvent('response', [
             'icon' => 'success',
             'title' => 'Sucessfully saved.'
         ]);
+
+        $this->reset();
     }
 
     /**
@@ -107,7 +117,7 @@ class  Vendors extends Component
      */
     public function read()
     {
-        return Vendor::where('name', 'like', '%' . $this->search . '%')
+        return Vendor::where('name', 'like', '%' . $this->query . '%')
             ->paginate(10);
     }
 
@@ -116,7 +126,7 @@ class  Vendors extends Component
      *
      * @return void
      */
-    public function update()
+    public function update(): void
     {
         $this->validate();
         Vendor::find($this->modelId)->update($this->modelData());
@@ -126,6 +136,8 @@ class  Vendors extends Component
             'icon' => 'success',
             'title' => 'Sucessfully updated.'
         ]);
+
+        $this->reset();
     }
 
     /**
@@ -137,12 +149,13 @@ class  Vendors extends Component
     {
         Vendor::destroy($this->modelId);
         $this->modalConfirmDeleteVisible = false;
-        $this->resetPage();
 
-         $this->dispatchBrowserEvent('response', [
+        $this->dispatchBrowserEvent('response', [
             'icon' => 'success',
             'title' => 'Sucessfully deleted.'
         ]);
+
+        $this->reset();
     }
 
     /**
@@ -150,10 +163,9 @@ class  Vendors extends Component
      *
      * @return void
      */
-    public function createShowModal()
+    public function createShowModal(): void
     {
         $this->resetValidation();
-        $this->reset();
         $this->modalFormVisible = true;
     }
 
@@ -163,10 +175,9 @@ class  Vendors extends Component
      * @param  mixed $id
      * @return void
      */
-    public function updateShowModal($id)
+    public function updateShowModal($id): void
     {
         $this->resetValidation();
-        $this->reset();
         $this->modalFormVisible = true;
         $this->modelId = $id;
         $this->loadModel();
@@ -178,7 +189,7 @@ class  Vendors extends Component
      * @param  mixed $id
      * @return void
      */
-    public function deleteShowModal($id)
+    public function deleteShowModal($id): void
     {
         $this->modelId = $id;
         $this->modalConfirmDeleteVisible = true;
@@ -190,6 +201,4 @@ class  Vendors extends Component
             'data' => $this->read()
         ]);
     }
-
-
 }

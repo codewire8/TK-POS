@@ -120,6 +120,7 @@ class  Categories extends Component
             'icon' => 'success',
             'title' => 'Successfully updated.'
         ]);
+        $this->reset();
     }
 
     /**
@@ -131,12 +132,12 @@ class  Categories extends Component
     {
         Category::destroy($this->modelId);
         $this->modalConfirmDeleteVisible = false;
-        $this->resetPage();
 
          $this->dispatchBrowserEvent('response', [
             'icon' => 'success',
             'title' => 'Successfully deleted.'
         ]);
+        $this->reset();
     }
 
     /**
@@ -147,7 +148,6 @@ class  Categories extends Component
     public function createShowModal() : void
     {
         $this->resetValidation();
-        $this->reset();
         $this->modalFormVisible = true;
     }
 
@@ -160,7 +160,6 @@ class  Categories extends Component
     public function updateShowModal($id) : void
     {
         $this->resetValidation();
-        $this->reset();
         $this->modalFormVisible = true;
         $this->modelId = $id;
         $this->loadModel();

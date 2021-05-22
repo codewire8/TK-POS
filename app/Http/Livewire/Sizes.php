@@ -34,12 +34,12 @@ class  Sizes extends Component
             'name' => [
                 'required',
                 'max:50',
-                 Rule::unique('sizes', 'name')->ignore($this->modelId)
+                Rule::unique('sizes', 'name')->ignore($this->modelId)
             ]
         ];
     }
 
-        /**
+    /**
      * Custom Error  Validataion
      *
      * @return void
@@ -56,13 +56,13 @@ class  Sizes extends Component
      *
      * @return void
      */
-    public function loadModel()
+    public function loadModel() : void
     {
         $data = Size::find($this->modelId);
         $this->name = $data->name;
     }
 
-     /**
+    /**
      * Model data of this component.
      *
      * @return void
@@ -79,17 +79,18 @@ class  Sizes extends Component
      *
      * @return void
      */
-    public function create()
+    public function create() : void
     {
         $this->validate();
         Size::create($this->modelData());
         $this->modalFormVisible = false;
-        $this->reset();
 
-         $this->dispatchBrowserEvent('response', [
+        $this->dispatchBrowserEvent('response', [
             'icon' => 'success',
             'title' => 'Sucessfully saved.'
         ]);
+       
+        $this->reset();
     }
 
     /**
@@ -107,7 +108,7 @@ class  Sizes extends Component
      *
      * @return void
      */
-    public function update()
+    public function update() : void
     {
         $this->validate();
         Size::find($this->modelId)->update($this->modelData());
@@ -124,16 +125,17 @@ class  Sizes extends Component
      *
      * @return void
      */
-    public function delete()
+    public function delete() : void
     {
         Size::destroy($this->modelId);
         $this->modalConfirmDeleteVisible = false;
-        $this->resetPage();
-
+       
         $this->dispatchBrowserEvent('response', [
             'icon' => 'success',
             'title' => 'Sucessfully deleted.'
         ]);
+
+        $this->reset();
     }
 
     /**
@@ -141,10 +143,9 @@ class  Sizes extends Component
      *
      * @return void
      */
-    public function createShowModal()
+    public function createShowModal() : void
     {
         $this->resetValidation();
-        $this->reset();
         $this->modalFormVisible = true;
     }
 
@@ -154,10 +155,9 @@ class  Sizes extends Component
      * @param  mixed $id
      * @return void
      */
-    public function updateShowModal($id)
+    public function updateShowModal($id) : void
     {
         $this->resetValidation();
-        $this->reset();
         $this->modalFormVisible = true;
         $this->modelId = $id;
         $this->loadModel();
@@ -169,7 +169,7 @@ class  Sizes extends Component
      * @param  mixed $id
      * @return void
      */
-    public function deleteShowModal($id)
+    public function deleteShowModal($id) : void
     {
         $this->modelId = $id;
         $this->modalConfirmDeleteVisible = true;
@@ -181,6 +181,4 @@ class  Sizes extends Component
             'data' => $this->read()
         ]);
     }
-
-
 }
