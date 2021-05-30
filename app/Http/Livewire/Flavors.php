@@ -30,7 +30,10 @@ class  Flavors extends Component
 
     // search variables
 
+    public $searchBy;
     public $search;
+
+    private $pagination = 10;
 
     /**
      * Form Validation.
@@ -44,15 +47,14 @@ class  Flavors extends Component
             'name' => [
                 'required',
                 'max:50',
-                 Rule::unique('flavors')->where(function ($query) {
+                Rule::unique('flavors')->where(function ($query) {
 
-                     return $query
+                    return $query
                         ->whereName($this->name)
                         ->whereBrandId($this->brand)
                         ->whereCategoryId($this->category)
                         ->whereSizeId($this->size);
-
-                 })->ignore($this->modelId),
+                })->ignore($this->modelId),
             ],
             'brand' => 'required',
             'category' => 'required',
@@ -61,7 +63,7 @@ class  Flavors extends Component
         ];
     }
 
-        /**
+    /**
      * Custom Error  Validataion
      *
      * @return void
@@ -81,7 +83,7 @@ class  Flavors extends Component
      *
      * @return void
      */
-    public function loadModel()
+    public function loadModel(): void
     {
         $data = Flavor::find($this->modelId);
         $this->pcode = $data->pcode;
@@ -94,17 +96,26 @@ class  Flavors extends Component
         $this->reorder = $data->reorder;
     }
 
-     /**
+    /**
      * Model data of this component.
      *
      * @return void
      */
     public function createmodelData()
     {
+        $productDesc = '';
+
+        if ($this->size !== null) {
+            $size = Size::find($this->size);
+            $productDesc = $this->name . ' (' . $size->name . ') ';
+        } else {
+            $productDesc = $this->name;
+        }
+
         return [
             'pcode' => Helper::IDGenerator(new Flavor, 'pcode', 5, 'P'),
             'barcode' => $this->barcode,
-            'name' => $this->name,
+            'name' => $productDesc,
             'brand_id' => $this->brand,
             'category_id' => $this->category,
             'size_id' => $this->size,
@@ -114,11 +125,20 @@ class  Flavors extends Component
     }
 
 
-    public function updatemodelData()
+    public function updatemodelData() 
     {
+        $productDesc = '';
+
+        if ($this->size !== null) {
+            $size = Size::find($this->size);
+            $productDesc = $this->name . ' (' . $size->name . ') ';
+        } else {
+            $productDesc = $this->name;
+        }
+
         return [
             'barcode' => $this->barcode,
-            'name' => $this->name,
+            'name' => $productDesc,
             'brand_id' => $this->brand,
             'category_id' => $this->category,
             'size_id' => $this->size,
@@ -132,17 +152,18 @@ class  Flavors extends Component
      *
      * @return void
      */
-    public function create()
+    public function create(): void
     {
         $this->validate();
         Flavor::create($this->createmodelData());
         $this->modalFormVisible = false;
-        $this->reset();
 
         $this->dispatchBrowserEvent('response', [
             'icon' => 'success',
             'title' => 'Sucessfully saved.'
         ]);
+
+        $this->reset();
     }
 
     /**
@@ -152,12 +173,28 @@ class  Flavors extends Component
      */
     public function read()
     {
-        return Flavor::where('name', 'like', '%' . $this->search . '%')
-            ->orWhere('pcode', 'like', '%' . $this->search . '%')
-            ->with('category')
-            ->with('size')
-            ->with('brand')
-            ->paginate(10);
+        if ($this->search !== null && $this->searchBy === 'Product Code') {
+            dd('pcode');
+            return Flavor::where('pcode', '=' . $this->searchBy)
+                ->orWhere('pcode', 'like', '%' . $this->search . '%')
+                ->with('category')
+                ->with('size')
+                ->with('brand')
+                ->paginate($this->pagination);
+        } else if ($this->search !== null && $this->searchBy === 'Description') {
+            dd('desc');
+            return Flavor::where('name', '=' . $this->searchBy)
+                ->orWhere('name', 'like', '%' . $this->search . '%')
+                ->with('category')
+                ->with('size')
+                ->with('brand')
+                ->paginate($this->pagination);
+        } else {
+            return Flavor::with('category')
+                ->with('size')
+                ->with('brand')
+                ->paginate($this->pagination);
+        }
     }
 
 
@@ -166,7 +203,7 @@ class  Flavors extends Component
      *
      * @return void
      */
-    public function update()
+    public function update(): void
     {
         $this->validate();
         Flavor::find($this->modelId)->update($this->updatemodelData());
@@ -176,6 +213,7 @@ class  Flavors extends Component
             'icon' => 'success',
             'title' => 'Sucessfully updated.'
         ]);
+
         $this->reset();
     }
 
@@ -185,16 +223,17 @@ class  Flavors extends Component
      *
      * @return void
      */
-    public function delete()
+    public function delete(): void
     {
         Flavor::destroy($this->modelId);
         $this->modalConfirmDeleteVisible = false;
-        $this->resetPage();
 
         $this->dispatchBrowserEvent('response', [
             'icon' => 'success',
             'title' => 'Sucessfully deleted.'
         ]);
+
+        $this->reset();
     }
 
     /**
@@ -202,7 +241,7 @@ class  Flavors extends Component
      *
      * @return void
      */
-    public function createShowModal()
+    public function createShowModal(): void
     {
         $this->resetValidation();
         $this->reset();
@@ -215,7 +254,7 @@ class  Flavors extends Component
      * @param  mixed $id
      * @return void
      */
-    public function updateShowModal($id)
+    public function updateShowModal($id): void
     {
         $this->resetValidation();
         $this->modalFormVisible = true;
@@ -229,7 +268,7 @@ class  Flavors extends Component
      * @param  mixed $id
      * @return void
      */
-    public function deleteShowModal($id)
+    public function deleteShowModal($id): void
     {
         $this->modelId = $id;
         $this->modalConfirmDeleteVisible = true;
@@ -244,6 +283,4 @@ class  Flavors extends Component
             'brands' => Brand::all(),
         ]);
     }
-
-
 }

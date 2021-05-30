@@ -56,7 +56,7 @@ class  Sizes extends Component
      *
      * @return void
      */
-    public function loadModel() : void
+    public function loadModel(): void
     {
         $data = Size::find($this->modelId);
         $this->name = $data->name;
@@ -79,7 +79,7 @@ class  Sizes extends Component
      *
      * @return void
      */
-    public function create() : void
+    public function create(): void
     {
         $this->validate();
         Size::create($this->modelData());
@@ -89,7 +89,7 @@ class  Sizes extends Component
             'icon' => 'success',
             'title' => 'Sucessfully saved.'
         ]);
-       
+
         $this->reset();
     }
 
@@ -108,7 +108,7 @@ class  Sizes extends Component
      *
      * @return void
      */
-    public function update() : void
+    public function update(): void
     {
         $this->validate();
         Size::find($this->modelId)->update($this->modelData());
@@ -125,11 +125,11 @@ class  Sizes extends Component
      *
      * @return void
      */
-    public function delete() : void
+    public function delete(): void
     {
         Size::destroy($this->modelId);
         $this->modalConfirmDeleteVisible = false;
-       
+
         $this->dispatchBrowserEvent('response', [
             'icon' => 'success',
             'title' => 'Sucessfully deleted.'
@@ -143,9 +143,10 @@ class  Sizes extends Component
      *
      * @return void
      */
-    public function createShowModal() : void
+    public function createShowModal(): void
     {
         $this->resetValidation();
+        $this->reset();
         $this->modalFormVisible = true;
     }
 
@@ -155,7 +156,7 @@ class  Sizes extends Component
      * @param  mixed $id
      * @return void
      */
-    public function updateShowModal($id) : void
+    public function updateShowModal($id): void
     {
         $this->resetValidation();
         $this->modalFormVisible = true;
@@ -169,7 +170,7 @@ class  Sizes extends Component
      * @param  mixed $id
      * @return void
      */
-    public function deleteShowModal($id) : void
+    public function deleteShowModal($id): void
     {
         $this->modelId = $id;
         $this->modalConfirmDeleteVisible = true;

@@ -21,7 +21,7 @@
 </head>
 
 <body>
-    <div class="flex bg-gray-200 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
+    <div class="flex bg-gray-100 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
         @if (auth()->user()->role === 'admin')
         @include('layouts.menu')
         @include('layouts.mobile-menu')

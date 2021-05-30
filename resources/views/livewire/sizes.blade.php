@@ -87,7 +87,7 @@
 
     {{-- Modal Form --}}
 
-    <x-jet-dialog-modal wire:model="modalFormVisible">
+    <x-jet-dialog-modal wire:model="modalFormVisible" maxWidth="sm">
         <x-slot name="title">
             {{ __('Size') }}
         </x-slot>
@@ -123,9 +123,9 @@
     {{-- The delte modal --}}
 
     <!-- Delete User Confirmation Modal -->
-    <x-jet-dialog-modal wire:model="modalConfirmDeleteVisible">
+    <x-jet-dialog-modal wire:model="modalConfirmDeleteVisible" maxWidth="sm">
         <x-slot name="title">
-            {{ __('Size') }}
+            {{ __('Delete Size?') }}
         </x-slot>
 
         <x-slot name="content">
@@ -134,11 +134,11 @@
 
         <x-slot name="footer">
             <x-jet-secondary-button wire:click="$toggle('modalConfirmDeleteVisible')" wire:loading.attr="disabled">
-                {{ __('Nevermind') }}
+                {{ __('Cancel') }}
             </x-jet-secondary-button>
 
             <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
-                {{ __('Delete') }}
+                {{ __('Yes') }}
             </x-jet-danger-button>
         </x-slot>
     </x-jet-dialog-modal>

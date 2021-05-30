@@ -10,7 +10,7 @@
                                 Reference No.
                             </label>
                             <div class="mt-1 flex rounded-md shadow-sm">
-                                <x-jet-input wire:model="refno" class="block w-full {{ $errors->has('refno') ? 'border-red-300' : '' }}" type="text" disabled />
+                                <x-jet-input wire:model="refno" class="block w-full bg-gray-100 cursor-not-allowed {{ $errors->has('refno') ? 'border-red-300' : '' }}" type="text" disabled />
                                 <span wire:click="generateReferenceNo" class="inline-flex items-center px-3 border border-l-0  rounded-md border-gray-300 bg-gray-50 text-blue-500 text-sm cursor-pointer">
                                     Generate
                                 </span>
@@ -43,7 +43,7 @@
 
                         <div class="col-span-6 sm:col-span-3">
                             <x-jet-label value="{{ __('Contact Person') }}" />
-                            <x-jet-input class="block mt-1 w-full" type="text" wire:model="contact_person" disabled />
+                            <x-jet-input class="block mt-1 w-full bg-gray-100 cursor-not-allowed" type="text" wire:model.defer="contact_person" disabled />
                         </div>
 
                     </div>
@@ -57,7 +57,7 @@
 
                         <div class="col-span-6 sm:col-span-3">
                             <x-jet-label value="{{ __('Address') }}" />
-                            <x-jet-input class="block mt-1 w-full" type="text" wire:model="address" disabled />
+                            <x-jet-input class="block mt-1 w-full bg-gray-100 cursor-not-allowed" type="text" wire:model.defer="address" disabled />
                         </div>
 
                     </div>

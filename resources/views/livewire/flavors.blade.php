@@ -1,30 +1,34 @@
 <div class="p-6">
 
+    <div wire:loading class="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-transparent opacity-80 flex flex-col items-center justify-center">
+        <x-jet-loading-icon></x-jet-loading-icon>
+    </div>
+
     {{-- Create button --}}
 
     <div class="grid grid-cols-2">
-        <div class="relative pb-4">
-            <div class="relative md:mt-0">
-                <input type="text"
-                    class="bg-white rounded-md w-1/2 px-4 pl-8 py-1 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray-300 focus:border-indigo-300"
-                    wire:model.debounce.500ms="search" x-ref="search"
-                    @keydown.window="if (event.keyCode === 113) { event.preventDefault(); $refs.search.focus();}"
-                    placeholder="Search (Press '[F2]' to focus)">
-                <div class="absolute top-0">
-                    <svg class="fill-current w-4 text-gray-500 mt-2 ml-2" viewBox="0 0 24 24">
-                        <path class="heroicon-ui"
-                            d="M16.32 14.9l5.39 5.4a1 1 0 01-1.42 1.4l-5.38-5.38a8 8 0 111.41-1.41zM10 16a6 6 0 100-12 6 6 0 000 12z" />
-                    </svg>
-                </div>
-                <div wire:loading="search" class="spinner top-0 right-1/2 mr-4 mt-4"></div>
+        <div class="relative flex items-center pb-3">
+            <x-jet-label class="md:mt-0">Search:</x-jet-label>
+            <div class="md:mt-0 mx-2">
+                <x-jet-select-dropdown wire:model="searchBy">
+                    @foreach (App\Models\Flavor::productSearchFilter() as $key => $value)
+                    <option value="{{ $key }}">{{ $value }}</option>
+                    @endforeach
+                </x-jet-select-dropdown>
+            </div>
+            <div class="md:mt-0">
+                <x-jet-search-input type="text" x-ref="search" wire:model.defer="search" wire:keydown.enter="read" @keydown.window="if (event.keyCode === 113) { event.preventDefault(); $refs.search.focus(); }" />
+            </div>
+            <div class="md:mt-0 mx-2">
+                <x-jet-success-button wire:click="read">
+                    {{ __('filter') }}
+                </x-jet-success-button>
             </div>
         </div>
-        <div class="relative pb-4">
-            <div class="text-right">
-                <x-jet-button wire:click="createShowModal">
-                    {{ __('New Product') }}
-                </x-jet-button>
-            </div>
+        <div class="text-right">
+            <x-jet-button wire:click="createShowModal">
+                {{ __('New Product') }}
+            </x-jet-button>
         </div>
     </div>
 
@@ -33,32 +37,26 @@
     <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <div class="shadow-sm overflow-hidden border border-gray-200 rounded-md">
                     <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-600">
+                        <thead class="bg-gray-100">
                             <tr>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                                <th scope="col" class="px-6 py-2 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                                     pcode
                                 </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                                <th scope="col" class="px-6 py-2 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
                                     description
                                 </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-center text-xs font-bold text-white uppercase tracking-wider">
+                                <th scope="col" class="px-6 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
                                     brand
                                 </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-center text-xs font-bold text-white uppercase tracking-wider">
+                                <th scope="col" class="px-6 py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
                                     category
                                 </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-center text-xs font-bold text-white uppercase tracking-wider">
+                                <th scope="col" class="px-6 py-2 text-center text-xs font-bold text-gray-500  uppercase tracking-wider">
                                     price
                                 </th>
-                                <th scope="col"
-                                    class="py-3 text-center text-xs font-bold text-white uppercase tracking-wider">
+                                <th scope="col" class="py-2 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">
                                     re-order level
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
@@ -74,7 +72,7 @@
                                     {{ $item->pcode }}
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium">
-                                    {{ $item->name . ' ( ' . $item->size->name . ' )' }}
+                                    {{ $item->name }}
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 font-medium text-center">
                                     {{ $item->brand->name }}
@@ -90,19 +88,15 @@
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex item-center justify-end">
-                                        <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer"
-                                            wire:click="updateShowModal({{ $item->id }})">
+                                        <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer" wire:click="updateShowModal({{ $item->id }})">
                                             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap=" round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                                <path stroke-linecap=" round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
                                                 </path>
                                             </svg>
                                         </div>
-                                        <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer"
-                                            wire:click="deleteShowModal({{ $item->id }})">
+                                        <div class="w-4 mr-2 text-gray-500 transform hover:text-purple-500 hover:scale-110 cursor-pointer" wire:click="deleteShowModal({{ $item->id }})">
                                             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
                                                 </path>
                                             </svg>
                                         </div>
@@ -146,8 +140,7 @@
             </div>
             <div class="mt-4">
                 <x-jet-label for="brand" value="{{ __('Brand') }}" />
-                <select id="brand" wire:model="brand"
-                    class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
+                <select id="brand" wire:model="brand" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
                     <option value="">---</option>
                     @foreach ($brands as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -157,8 +150,7 @@
             </div>
             <div class="mt-4">
                 <x-jet-label for="category" value="{{ __('Category') }}" />
-                <select id="category" wire:model="category"
-                    class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
+                <select id="category" wire:model="category" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
                     <option value="">---</option>
                     @foreach ($categories as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -168,8 +160,7 @@
             </div>
             <div class="mt-4">
                 <x-jet-label for="size  " value="{{ __('Size') }}" />
-                <select id="size" wire:model="size"
-                    class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
+                <select id="size" wire:model="size" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full">
                     <option value="">---</option>
                     @foreach ($sizes as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -180,24 +171,20 @@
             <div class="mt-4">
                 @if ($modelId)
                 <x-jet-label for="price" value="{{ __('Price') }}" />
-                <x-jet-input id="price" class="block mt-1 w-full" type="text" wire:model="price"
-                    wire:keydown.enter="update" />
+                <x-jet-input id="price" class="block mt-1 w-full" type="text" wire:model="price" wire:keydown.enter="update" />
                 @else
                 <x-jet-label for="price" value="{{ __('Price') }}" />
-                <x-jet-input id="price" class="block mt-1 w-full" type="text" wire:model="price"
-                    wire:keydown.enter="create" />
+                <x-jet-input id="price" class="block mt-1 w-full" type="text" wire:model="price" wire:keydown.enter="create" />
                 @endif
                 @error('price') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <div class="mt-4">
                 @if ($modelId)
                 <x-jet-label for="reorder" value="{{ __('Re-Order Level') }}" />
-                <x-jet-input id="reorder" class="block mt-1 w-full" type="text" wire:model="reorder"
-                    wire:keydown.enter="update" />
+                <x-jet-input id="reorder" class="block mt-1 w-full" type="text" wire:model="reorder" wire:keydown.enter="update" />
                 @else
                 <x-jet-label for="reorder" value="{{ __('Re-Order Level') }}" />
-                <x-jet-input id="reorder" class="block mt-1 w-full" type="text" wire:model="reorder"
-                    wire:keydown.enter="create" />
+                <x-jet-input id="reorder" class="block mt-1 w-full" type="text" wire:model="reorder" wire:keydown.enter="create" />
                 @endif
                 @error('reorder') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
@@ -246,7 +233,9 @@
 
 <script>
     window.addEventListener('response', event => {
-        Toast.fire({ icon: event.detail.icon, title: event.detail.title})
+        Toast.fire({
+            icon: event.detail.icon,
+            title: event.detail.title
+        })
     })
-
 </script>

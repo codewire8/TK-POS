@@ -48,4 +48,14 @@ class Flavor extends Model
     {
         return $this->belongsTo(StockAdjustment::class);
     }
+
+    public static function productSearchFilter()
+    {
+        return [
+             'Product Code',
+             'Description',
+             'Brand',
+             'Category',
+        ];
+    }
 }
