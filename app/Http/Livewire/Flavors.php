@@ -33,7 +33,27 @@ class  Flavors extends Component
     public $searchBy;
     public $search;
 
+    // search options
+
+    public $searchOptions = [
+        'pcode' => 'Product Code',
+        'desc' => 'Description',
+        'brand' => 'Brand',
+        'category' => 'Category'
+    ];
+
     private $pagination = 10;
+
+    public function mount(): void
+    {
+        $this->searchBy = 'pcode';
+    }
+
+    public function changeValue($value)
+    {
+        dd($this->searchBy);
+        $this->searchBy = $value;
+    }
 
     /**
      * Form Validation.
@@ -48,7 +68,6 @@ class  Flavors extends Component
                 'required',
                 'max:50',
                 Rule::unique('flavors')->where(function ($query) {
-
                     return $query
                         ->whereName($this->name)
                         ->whereBrandId($this->brand)
@@ -125,7 +144,7 @@ class  Flavors extends Component
     }
 
 
-    public function updatemodelData() 
+    public function updatemodelData()
     {
         $productDesc = '';
 
@@ -173,7 +192,7 @@ class  Flavors extends Component
      */
     public function read()
     {
-        if ($this->search !== null && $this->searchBy === 'Product Code') {
+        if ($this->search !== null && $this->searchBy === 'pcode') {
             dd('pcode');
             return Flavor::where('pcode', '=' . $this->searchBy)
                 ->orWhere('pcode', 'like', '%' . $this->search . '%')
@@ -181,7 +200,7 @@ class  Flavors extends Component
                 ->with('size')
                 ->with('brand')
                 ->paginate($this->pagination);
-        } else if ($this->search !== null && $this->searchBy === 'Description') {
+        } else if ($this->search !== null && $this->searchBy === 'desc') {
             dd('desc');
             return Flavor::where('name', '=' . $this->searchBy)
                 ->orWhere('name', 'like', '%' . $this->search . '%')
